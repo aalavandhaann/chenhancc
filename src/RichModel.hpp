@@ -85,8 +85,7 @@ public:
 	//inline int GetThirdEdgeIndex(int faceIndex) const;
 	//inline int GetEdgeIndexFromFace(int faceIndex, int subIndex) const;
 	inline int GetEdgeIndexFromTwoVertices(int leftVert, int rightVert) const;
-	void SetEdgeLength(const char* filename);
-	void SetEdgeLength(int leftVert, int rightVert, double newLen);
+	void SetEdgeLength(int leftVert, int rightVert, double newLen, bool apply_reverse);
 	void UpdateAfterChangingEdgeLengths();
 	inline CPoint3D ComputeShiftPoint(int indexOfVert) const;
 	inline CPoint3D ComputeShiftPoint(int indexOfVert, double epsilon) const;
@@ -664,30 +663,21 @@ void CRichModel::ComputeNumOfComponents()
 	}
 }
 
-void CRichModel::SetEdgeLength(int leftVert, int rightVert, double newLength)
+void CRichModel::SetEdgeLength(int leftVert, int rightVert, double newLength, bool applyReverse)
 {
 	int edgeID = GetEdgeIndexFromTwoVertices(leftVert, rightVert);
 	int reverseID = Edge(edgeID).indexOfReverseEdge;
 	m_Edges[edgeID].length = newLength;
-	m_Edges[reverseID].length = newLength;
+	if(applyReverse)
+	{
+		m_Edges[reverseID].length = newLength;
+	}
 }
 
 void CRichModel::UpdateAfterChangingEdgeLengths()
 {
 	ComputeAnglesAroundVerts();
 	ComputePlanarCoordsOfIncidentVertForEdges();
-}
-
-void CRichModel::SetEdgeLength(const char* filename)
-{
-	int left, right;
-	double len;
-	ifstream inFile(filename);
-	while (inFile >> left && inFile >> right && inFile >> len)
-	{
-		SetEdgeLength(left, right, len);
-	}
-	inFile.close();
 }
 
 

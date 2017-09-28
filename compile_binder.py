@@ -47,7 +47,9 @@ def compile_tasks():
                                             ];
         p = subprocess.Popen(" ".join(generate_command), shell = True);
         return_code = p.wait();
+        
         if(args.b):
+            print('COMPILE AS SHARED LIBRARY FOR PYTHON');
             build_library_command = ["cp", PREFIX_PATH+"/"+ROOT_MODULE+".cpp",PROJECT_SOURCE_FILES+"/"+ROOT_MODULE+".cpp","&",
                                     CLANG_EXECUTABLE,"-O3 -shared -std=c++11",
                                     "-I"+PYBIND11_INCLUDES,"-I"+PYTHON_INCLUDES,"-I"+PROJECT_SOURCE_FILES,
@@ -57,7 +59,7 @@ def compile_tasks():
             print(" ".join(build_library_command));
             p = subprocess.Popen(" ".join(build_library_command), shell = True, cwd=PREFIX_PATH);
             return_code = p.wait();
-        
+    
     if(args.t):
         print('TESTING THE SHARED OBJECT WITH TEST00.py');
         test_library();

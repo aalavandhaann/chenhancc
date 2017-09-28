@@ -1044,8 +1044,7 @@ void bind_Point3D(std::function< pybind11::module &(std::string const &namespace
 		cl.def("IsStartEdge", (bool (CRichModel::*)(int) const) &CRichModel::IsStartEdge, "C++: CRichModel::IsStartEdge(int) const --> bool", pybind11::arg("edgeIndex"));
 		cl.def("HasBeenProcessed", (bool (CRichModel::*)() const) &CRichModel::HasBeenProcessed, "C++: CRichModel::HasBeenProcessed() const --> bool");
 		cl.def("GetEdgeIndexFromTwoVertices", (int (CRichModel::*)(int, int) const) &CRichModel::GetEdgeIndexFromTwoVertices, "C++: CRichModel::GetEdgeIndexFromTwoVertices(int, int) const --> int", pybind11::arg("leftVert"), pybind11::arg("rightVert"));
-		cl.def("SetEdgeLength", (void (CRichModel::*)(const char *)) &CRichModel::SetEdgeLength, "C++: CRichModel::SetEdgeLength(const char *) --> void", pybind11::arg("filename"));
-		cl.def("SetEdgeLength", (void (CRichModel::*)(int, int, double)) &CRichModel::SetEdgeLength, "C++: CRichModel::SetEdgeLength(int, int, double) --> void", pybind11::arg("leftVert"), pybind11::arg("rightVert"), pybind11::arg("newLen"));
+		cl.def("SetEdgeLength", (void (CRichModel::*)(int, int, double, bool)) &CRichModel::SetEdgeLength, "C++: CRichModel::SetEdgeLength(int, int, double, bool) --> void", pybind11::arg("leftVert"), pybind11::arg("rightVert"), pybind11::arg("newLen"), pybind11::arg("apply_reverse"));
 		cl.def("UpdateAfterChangingEdgeLengths", (void (CRichModel::*)()) &CRichModel::UpdateAfterChangingEdgeLengths, "C++: CRichModel::UpdateAfterChangingEdgeLengths() --> void");
 		cl.def("ComputeShiftPoint", (struct CPoint3D (CRichModel::*)(int) const) &CRichModel::ComputeShiftPoint, "C++: CRichModel::ComputeShiftPoint(int) const --> struct CPoint3D", pybind11::arg("indexOfVert"));
 		cl.def("ComputeShiftPoint", (struct CPoint3D (CRichModel::*)(int, double) const) &CRichModel::ComputeShiftPoint, "C++: CRichModel::ComputeShiftPoint(int, double) const --> struct CPoint3D", pybind11::arg("indexOfVert"), pybind11::arg("epsilon"));
@@ -1712,7 +1711,7 @@ struct PyCallBack_CICHWithFurtherPriorityQueue : public CICHWithFurtherPriorityQ
 
 void bind_RichModel(std::function< pybind11::module &(std::string const &namespace_) > &M)
 {
-	{ // EdgePoint file:RichModel.hpp line:321
+	{ // EdgePoint file:RichModel.hpp line:320
 		pybind11::class_<EdgePoint, std::shared_ptr<EdgePoint>> cl(M(""), "EdgePoint", "");
 		pybind11::handle cl_type = cl;
 
