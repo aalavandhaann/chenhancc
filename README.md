@@ -19,6 +19,13 @@ Installation
  - clone this repository
  - Ensure to set the variables inside `compile_binder.py`
  - run `python3 compile_binder.py`
+ 	- arguments and their purpose
+ 	- `-g`: Generate bindings
+ 	- `-b`: After generating the bindings compiled it to a python `.so` library
+ 	- `-t`: Test a short snippet of code to ensure if the library works
+ - To install the python library copy the generated chenhann.so (inside autobinding_build) to any locations as:
+ 	- site-packages of blender
+ 	- Or use it with any of your person python projects
 
 License
 -------
@@ -28,7 +35,9 @@ I haven't thought about it yet. The world is so strange that even free stuffs co
 Demos
 ---------
 You will find <b>blender</b> folder inside the <b>demo</b> folder. There is a blend file that can test a mesh loaded in the scene. Just ensure to load a mesh, select it with mouse and run the script `(Alt-p)`. You should see a path between the selected vertices as supplied in the code in the text editor of Blender. In the below code change the `svid` and `evid` to change the vertex selection. `svid` is the seed vertex index, and `evid` is the target vertex index to which a path should be found. 
-```import bpy, bmesh;
+
+```
+import bpy, bmesh;
 from chenhancc import CBaseModel as BaseModel, CRichModel as RichModel, CPoint3D as Point3D, CFace as Face, CICHWithFurtherPriorityQueue as ICHWithFurtherPriorityQueue;
 from mathutils import Vector;
 
@@ -110,3 +119,8 @@ if(m):
     createPathMesh(path_verts);
     print('DONE FOUND THE PATHS::: ');
 ```
+
+TO-DO
+-----
+
+I am trying to distribute this as a `pip` package. But my knowledge about pybind11 and binder is limited. Hence no idea of how to distribute as a setup.py project. If you have any ideas, then I am all ears.
