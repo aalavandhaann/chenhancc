@@ -2,6 +2,7 @@ from distutils.sysconfig import get_python_inc, get_python_lib;
 import subprocess, argparse;
 from direct.directscripts.gendocs import generate
 
+print(':::::::GENERATE BIND FILE, BUILD FROM IT, TEST THE RESULTS ::: ')
 def test_library():
     from chenhancc import CPoint3D, CFace, CRichModel, CBaseModel, CExactMethodForDGP;
     from random import random, randint;
