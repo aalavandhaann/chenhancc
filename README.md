@@ -1,15 +1,15 @@
-python_example
+chenhancc
 ==============
 
-An example project built with [pybind11](https://github.com/pybind/pybind11).
+A Fast geodesic algorithm in python that spans across the surface through the polygons
 
 Installation
 ------------
 
 **Prerequesties**
- - This code is compiled using the magic binders for pybind11 created by binder 
- ..*[Github link for binder](https://github.com/RosettaCommons/binder)
- ..*[Github link for binder](https://github.com/pybind/pybind11) 
+- This code is compiled using the magic binders for pybind11 created by binder 
+	*[Github link for binder](https://github.com/RosettaCommons/binder)
+	*[Github link for binder](https://github.com/pybind/pybind11) 
 
 
 **On Unix (Linux, OS X)**
