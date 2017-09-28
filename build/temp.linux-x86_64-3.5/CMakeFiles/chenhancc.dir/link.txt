@@ -1,1 +1,0 @@
-/usr/bin/c++  -fPIC  -DVERSION_INFO=\"0.1\"  -O3 -DNDEBUG  -shared  -o ../../chenhancc.cpython-35m-x86_64-linux-gnu.so CMakeFiles/chenhancc.dir/src/chenhancc.cpp.o -flto 
