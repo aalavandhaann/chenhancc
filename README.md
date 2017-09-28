@@ -9,84 +9,104 @@ Installation
 **Prerequesties**
 - This code is compiled using the magic binders for pybind11 created by binder.
 
-	-[Github link for binder](https://github.com/RosettaCommons/binder).
+	*[Github link for binder](https://github.com/RosettaCommons/binder).
 	
-	-[Github link for pybind11](https://github.com/pybind/pybind11).
+	*[Github link for pybind11](https://github.com/pybind/pybind11).
 
 
 **On any OS (Linux, OS X, MAC, Windows)**
 
  - clone this repository
- - set the variables inside `compile_binder.py`
+ - Ensure to set the variables inside `compile_binder.py`
  - run `python3 compile_binder.py`
-
-**On Windows (Requires Visual Studio 2015)**
-
- - For Python 3.5:
-     - clone this repository
-     - `pip install ./python_example`
- - For earlier versions of Python, including Python 2.7:
-
-   Pybind11 requires a C++11 compliant compiler (i.e. Visual Studio 2015 on
-   Windows). Running a regular `pip install` command will detect the version
-   of the compiler used to build Python and attempt to build the extension
-   with it. We must force the use of Visual Studio 2015.
-
-     - clone this repository
-     - `"%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" x64`
-     - `set DISTUTILS_USE_SDK=1`
-     - `set MSSdk=1`
-     - `pip install ./python_example`
-
-   Note that this requires the user building `python_example` to have registry edition
-   rights on the machine, to be able to run the `vcvarsall.bat` script.
-
-
-Windows runtime requirements
-----------------------------
-
-On Windows, the Visual C++ 2015 redistributable packages are a runtime
-requirement for this project. It can be found [here](https://www.microsoft.com/en-us/download/details.aspx?id=48145).
-
-If you use the Anaconda python distribution, you may require the Visual Studio
-runtime as a platform-dependent runtime requirement for you package:
-
-```yaml
-requirements:
-  build:
-    - python
-    - setuptools
-    - pybind11
-
-  run:
-   - python
-   - vs2015_runtime  # [win]
-```
-
-
-Building the documentation
---------------------------
-
-Documentation for the example project is generated using Sphinx. Sphinx has the
-ability to automatically inspect the signatures and documentation strings in
-the extension module to generate beautiful documentation in a variety formats.
-The following command generates HTML-based reference documentation; for other
-formats please refer to the Sphinx manual:
-
- - `cd python_example/docs`
- - `make html`
 
 License
 -------
 
-pybind11 is provided under a BSD-style license that can be found in the LICENSE
-file. By using, distributing, or contributing to this project, you agree to the
-terms and conditions of this license.
+I haven't thought about it yet. The world is so strange that even free stuffs come at a cost. Did you notice that even for free licenses there are many variants to it? Anyways feel free to do things you want to after cloning the repository. 
 
-Test call
+Demos
 ---------
+You will find <b>blender</b> folder inside the <b>demo</b> folder. There is a blend file that can test a mesh loaded in the scene. Just ensure to load a mesh, select it with mouse and run the script `(Alt-p)`. You should see a path between the selected vertices as supplied in the code in the text editor of Blender. In the below code change the `svid` and `evid` to change the vertex selection. `svid` is the seed vertex index, and `evid` is the target vertex index to which a path should be found. 
+```import bpy, bmesh;
+from chenhancc import CBaseModel as BaseModel, CRichModel as RichModel, CPoint3D as Point3D, CFace as Face, CICHWithFurtherPriorityQueue as ICHWithFurtherPriorityQueue;
+from mathutils import Vector;
 
-```python
-import python_example
-python_example.add(1, 2)
+c = bpy.context;
+m = c.active_object;
+svid = 0;
+evid = 20000;
+
+def rotate(l, n):
+    return l[n:] + l[:n];
+
+def createPathMesh(points):
+    myvertexlist = [[2,2,2],[4,4,4],[6,6,6],[8,8,8]]
+    
+    obName = "path_"+str(len(points));
+    me = bpy.data.meshes.new(obName);
+    ob = bpy.data.objects.new(obName, me);
+
+    # Get a BMesh representation
+    bm = bmesh.new();   # create an empty BMesh
+    bm.from_mesh(me);   # fill it in from a Mesh
+
+    # Modify the BMesh, can do anything here...
+    for index, co in enumerate(points):
+        v = bm.verts.new(co);
+        v.index = index;
+        
+    bm.verts.ensure_lookup_table();
+    
+    for index, co in enumerate(points[1:]):
+        v1 = bm.verts[index-1];
+        v2 = bm.verts[index];
+        e = bm.edges.new((v1, v2));
+        
+    
+    # also add bm.edges and bm.faces
+
+    # Finish up, write the bmesh back to the mesh
+    bm.to_mesh(me);
+    bm.free();  # free and prevent further access
+    
+    scn = bpy.context.scene;
+    scn.objects.link(ob);
+    scn.objects.active = ob;
+    ob.select = True;
+
+
+if(m):
+    verts = [];
+    faces = [];
+    loops = m.data.loops;
+    
+    bmodel = RichModel();
+    
+    m.data.vertices[svid].select = True;
+    m.data.vertices[evid].select = True;
+    
+    for v in m.data.vertices:
+        p3d = Point3D(v.co.x, v.co.y, v.co.z);
+        verts.append(p3d);
+   
+    for f in m.data.polygons:
+        f_vids = [loops[lid].vertex_index for lid in f.loop_indices];        
+        faces.append(Face(f_vids[0], f_vids[1], f_vids[2]));
+    
+    bmodel.LoadModel(verts, faces);
+    bmodel.Preprocess();
+    
+    emethod = ICHWithFurtherPriorityQueue(bmodel, set([svid]));
+    emethod.Execute();
+    paths = emethod.FindSourceVertex(evid,[]);
+    paths = rotate(paths, 1);
+    
+    path_verts = [];
+    
+    for epoint in paths:
+        pt = epoint.Get3DPoint(bmodel);
+        path_verts.append(Vector((pt.x, pt.y, pt.z)));
+    createPathMesh(path_verts);
+    print('DONE FOUND THE PATHS::: ');
 ```
