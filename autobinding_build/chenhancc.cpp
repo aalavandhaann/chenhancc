@@ -4,6 +4,12 @@
 #include <BaseModel.hpp> // CFace::operator=
 #include <BaseModel.hpp> // CFace::operator[]
 #include <BaseModel.hpp> // CFace::setIndices
+#include <ExactMethodForDGP.hpp> // InfoAtVertex
+#include <ExactMethodForDGP.hpp> // InfoAtVertex::InfoAtVertex
+#include <ExactMethodForDGP.hpp> // InfoAtVertex::operator=
+#include <ExactMethodForDGP.hpp> // QuoteInfoAtVertex
+#include <ExactMethodForDGP.hpp> // QuoteInfoAtVertex::QuoteInfoAtVertex
+#include <ExactMethodForDGP.hpp> // QuoteInfoAtVertex::operator=
 #include <Point3D.hpp> // CPoint3D
 #include <Point3D.hpp> // CPoint3D::CPoint3D
 #include <Point3D.hpp> // CPoint3D::Len
@@ -15,11 +21,49 @@
 #include <Point3D.hpp> // CPoint3D::operator/=
 #include <Point3D.hpp> // CPoint3D::operator=
 #include <Point3D.hpp> // CPoint3D::operator==
+#include <PreviousCH.hpp> // InfoAtAngle
+#include <PreviousCH.hpp> // InfoAtAngle::InfoAtAngle
+#include <PreviousCH.hpp> // InfoAtAngle::operator=
+#include <PreviousCH.hpp> // QuoteWindow
+#include <PreviousCH.hpp> // QuoteWindow::QuoteWindow
+#include <PreviousCH.hpp> // QuoteWindow::operator=
+#include <RichModel.hpp> // CEdge
+#include <RichModel.hpp> // CEdge::CEdge
+#include <RichModel.hpp> // CEdge::operator=
+#include <RichModel.hpp> // CRichModel
+#include <RichModel.hpp> // EdgePoint
+#include <RichModel.hpp> // EdgePoint::EdgePoint
+#include <RichModel.hpp> // EdgePoint::Get3DPoint
+#include <RichModel.hpp> // EdgePoint::operator=
 #include <initializer_list> // std::initializer_list
+#include <initializer_list> // std::initializer_list<CEdge>::begin
+#include <initializer_list> // std::initializer_list<CEdge>::end
+#include <initializer_list> // std::initializer_list<CEdge>::initializer_list
+#include <initializer_list> // std::initializer_list<CEdge>::size
 #include <initializer_list> // std::initializer_list<CPoint3D>::begin
 #include <initializer_list> // std::initializer_list<CPoint3D>::end
 #include <initializer_list> // std::initializer_list<CPoint3D>::initializer_list
 #include <initializer_list> // std::initializer_list<CPoint3D>::size
+#include <initializer_list> // std::initializer_list<QuoteInfoAtVertex>::begin
+#include <initializer_list> // std::initializer_list<QuoteInfoAtVertex>::end
+#include <initializer_list> // std::initializer_list<QuoteInfoAtVertex>::initializer_list
+#include <initializer_list> // std::initializer_list<QuoteInfoAtVertex>::size
+#include <initializer_list> // std::initializer_list<QuoteWindow>::begin
+#include <initializer_list> // std::initializer_list<QuoteWindow>::end
+#include <initializer_list> // std::initializer_list<QuoteWindow>::initializer_list
+#include <initializer_list> // std::initializer_list<QuoteWindow>::size
+#include <initializer_list> // std::initializer_list<bool>::begin
+#include <initializer_list> // std::initializer_list<bool>::end
+#include <initializer_list> // std::initializer_list<bool>::initializer_list
+#include <initializer_list> // std::initializer_list<bool>::size
+#include <initializer_list> // std::initializer_list<int>::begin
+#include <initializer_list> // std::initializer_list<int>::end
+#include <initializer_list> // std::initializer_list<int>::initializer_list
+#include <initializer_list> // std::initializer_list<int>::size
+#include <initializer_list> // std::initializer_list<std::pair<int, double> >::begin
+#include <initializer_list> // std::initializer_list<std::pair<int, double> >::end
+#include <initializer_list> // std::initializer_list<std::pair<int, double> >::initializer_list
+#include <initializer_list> // std::initializer_list<std::pair<int, double> >::size
 #include <iterator> // __gnu_cxx::__normal_iterator
 #include <iterator> // __gnu_cxx::__normal_iterator<CFace *, std::vector<CFace, std::allocator<CFace> > >::__normal_iterator
 #include <iterator> // __gnu_cxx::__normal_iterator<CFace *, std::vector<CFace, std::allocator<CFace> > >::base
@@ -41,227 +85,26 @@
 #include <iterator> // __gnu_cxx::__normal_iterator<CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator--
 #include <iterator> // __gnu_cxx::__normal_iterator<CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator-=
 #include <iterator> // __gnu_cxx::__normal_iterator<CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator[]
-#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::__normal_iterator
-#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::base
-#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator*
-#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator+
-#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator++
-#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator+=
-#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator-
-#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator--
-#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator-=
-#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator[]
-#include <memory> // std::allocator
-#include <memory> // std::allocator<CFace>::allocator
-#include <memory> // std::allocator<CFace>::operator=
-#include <memory> // std::allocator<CPoint3D>::allocator
-#include <memory> // std::allocator<CPoint3D>::operator=
-#include <sstream> // __str__
-#include <vector> // std::vector
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::assign
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::at
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::back
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::begin
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::capacity
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::cbegin
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::cend
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::clear
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::data
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::empty
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::end
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::erase
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::front
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::insert
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::max_size
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::operator=
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::operator[]
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::pop_back
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::push_back
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::reserve
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::resize
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::shrink_to_fit
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::size
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::swap
-#include <vector> // std::vector<CFace, std::allocator<CFace> >::vector
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::assign
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::at
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::back
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::begin
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::capacity
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::cbegin
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::cend
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::clear
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::data
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::empty
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::end
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::erase
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::front
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::insert
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::max_size
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::operator=
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::operator[]
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::pop_back
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::push_back
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::reserve
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::resize
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::shrink_to_fit
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::size
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::swap
-#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::vector
-
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
-
-
-#ifndef BINDER_PYBIND11_TYPE_CASTER
-	#define BINDER_PYBIND11_TYPE_CASTER
-	PYBIND11_DECLARE_HOLDER_TYPE(T, std::shared_ptr<T>);
-	PYBIND11_DECLARE_HOLDER_TYPE(T, T*);
-	PYBIND11_MAKE_OPAQUE(std::shared_ptr<void>);
-#endif
-
-void bind_std_stl_vector(std::function< pybind11::module &(std::string const &namespace_) > &M)
-{
-	{ // std::vector file:bits/stl_vector.h line:214
-		pybind11::class_<std::vector<CPoint3D>, std::shared_ptr<std::vector<CPoint3D>>> cl(M("std"), "vector_CPoint3D_t", "");
-		pybind11::handle cl_type = cl;
-
-		cl.def(pybind11::init<>());
-
-		cl.def(pybind11::init<const class std::allocator<struct CPoint3D> &>(), pybind11::arg("__a"));
-
-		cl.def("__init__", [](std::vector<CPoint3D> *self_, unsigned long  const &a0) { new (self_) std::vector<CPoint3D>(a0); }, "doc");
-		cl.def(pybind11::init<unsigned long, const class std::allocator<struct CPoint3D> &>(), pybind11::arg("__n"), pybind11::arg("__a"));
-
-		cl.def("__init__", [](std::vector<CPoint3D> *self_, unsigned long  const &a0, const struct CPoint3D & a1) { new (self_) std::vector<CPoint3D>(a0, a1); }, "doc");
-		cl.def(pybind11::init<unsigned long, const struct CPoint3D &, const class std::allocator<struct CPoint3D> &>(), pybind11::arg("__n"), pybind11::arg("__value"), pybind11::arg("__a"));
-
-		cl.def(pybind11::init<const class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > &>(), pybind11::arg("__x"));
-
-		cl.def(pybind11::init<const class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > &, const class std::allocator<struct CPoint3D> &>(), pybind11::arg("__x"), pybind11::arg("__a"));
-
-		cl.def("__init__", [](std::vector<CPoint3D> *self_, class std::initializer_list<struct CPoint3D>  const &a0) { new (self_) std::vector<CPoint3D>(a0); }, "doc");
-		cl.def(pybind11::init<class std::initializer_list<struct CPoint3D>, const class std::allocator<struct CPoint3D> &>(), pybind11::arg("__l"), pybind11::arg("__a"));
-
-		cl.def("get_allocator", (class std::allocator<struct CPoint3D> (std::_Vector_base<CPoint3D,std::allocator<CPoint3D>>::*)() const) &std::vector<CPoint3D>::get_allocator, "C++: std::_Vector_base<CPoint3D, std::allocator<CPoint3D> >::get_allocator() const --> class std::allocator<struct CPoint3D>");
-		cl.def("assign", (class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > & (std::vector<CPoint3D>::*)(const class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > &)) &std::vector<CPoint3D, std::allocator<CPoint3D> >::operator=, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::operator=(const class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > &) --> class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > &", pybind11::return_value_policy::automatic, pybind11::arg("__x"));
-		cl.def("assign", (class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > & (std::vector<CPoint3D>::*)(class std::initializer_list<struct CPoint3D>)) &std::vector<CPoint3D, std::allocator<CPoint3D> >::operator=, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::operator=(class std::initializer_list<struct CPoint3D>) --> class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > &", pybind11::return_value_policy::automatic, pybind11::arg("__l"));
-		cl.def("assign", (void (std::vector<CPoint3D>::*)(unsigned long, const struct CPoint3D &)) &std::vector<CPoint3D, std::allocator<CPoint3D> >::assign, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::assign(unsigned long, const struct CPoint3D &) --> void", pybind11::arg("__n"), pybind11::arg("__val"));
-		cl.def("assign", (void (std::vector<CPoint3D>::*)(class std::initializer_list<struct CPoint3D>)) &std::vector<CPoint3D, std::allocator<CPoint3D> >::assign, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::assign(class std::initializer_list<struct CPoint3D>) --> void", pybind11::arg("__l"));
-		cl.def("begin", (class __gnu_cxx::__normal_iterator<struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > > (std::vector<CPoint3D>::*)()) &std::vector<CPoint3D, std::allocator<CPoint3D> >::begin, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::begin() --> class __gnu_cxx::__normal_iterator<struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >");
-		cl.def("end", (class __gnu_cxx::__normal_iterator<struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > > (std::vector<CPoint3D>::*)()) &std::vector<CPoint3D, std::allocator<CPoint3D> >::end, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::end() --> class __gnu_cxx::__normal_iterator<struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >");
-		cl.def("cbegin", (class __gnu_cxx::__normal_iterator<const struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > > (std::vector<CPoint3D>::*)() const) &std::vector<CPoint3D, std::allocator<CPoint3D> >::cbegin, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::cbegin() const --> class __gnu_cxx::__normal_iterator<const struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >");
-		cl.def("cend", (class __gnu_cxx::__normal_iterator<const struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > > (std::vector<CPoint3D>::*)() const) &std::vector<CPoint3D, std::allocator<CPoint3D> >::cend, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::cend() const --> class __gnu_cxx::__normal_iterator<const struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >");
-		cl.def("size", (unsigned long (std::vector<CPoint3D>::*)() const) &std::vector<CPoint3D, std::allocator<CPoint3D> >::size, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::size() const --> unsigned long");
-		cl.def("max_size", (unsigned long (std::vector<CPoint3D>::*)() const) &std::vector<CPoint3D, std::allocator<CPoint3D> >::max_size, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::max_size() const --> unsigned long");
-		cl.def("resize", (void (std::vector<CPoint3D>::*)(unsigned long)) &std::vector<CPoint3D, std::allocator<CPoint3D> >::resize, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::resize(unsigned long) --> void", pybind11::arg("__new_size"));
-		cl.def("resize", (void (std::vector<CPoint3D>::*)(unsigned long, const struct CPoint3D &)) &std::vector<CPoint3D, std::allocator<CPoint3D> >::resize, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::resize(unsigned long, const struct CPoint3D &) --> void", pybind11::arg("__new_size"), pybind11::arg("__x"));
-		cl.def("shrink_to_fit", (void (std::vector<CPoint3D>::*)()) &std::vector<CPoint3D, std::allocator<CPoint3D> >::shrink_to_fit, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::shrink_to_fit() --> void");
-		cl.def("capacity", (unsigned long (std::vector<CPoint3D>::*)() const) &std::vector<CPoint3D, std::allocator<CPoint3D> >::capacity, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::capacity() const --> unsigned long");
-		cl.def("empty", (bool (std::vector<CPoint3D>::*)() const) &std::vector<CPoint3D, std::allocator<CPoint3D> >::empty, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::empty() const --> bool");
-		cl.def("reserve", (void (std::vector<CPoint3D>::*)(unsigned long)) &std::vector<CPoint3D, std::allocator<CPoint3D> >::reserve, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::reserve(unsigned long) --> void", pybind11::arg("__n"));
-		cl.def("__getitem__", (struct CPoint3D & (std::vector<CPoint3D>::*)(unsigned long)) &std::vector<CPoint3D, std::allocator<CPoint3D> >::operator[], "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::operator[](unsigned long) --> struct CPoint3D &", pybind11::return_value_policy::automatic, pybind11::arg("__n"));
-		cl.def("at", (struct CPoint3D & (std::vector<CPoint3D>::*)(unsigned long)) &std::vector<CPoint3D, std::allocator<CPoint3D> >::at, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::at(unsigned long) --> struct CPoint3D &", pybind11::return_value_policy::automatic, pybind11::arg("__n"));
-		cl.def("front", (struct CPoint3D & (std::vector<CPoint3D>::*)()) &std::vector<CPoint3D, std::allocator<CPoint3D> >::front, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::front() --> struct CPoint3D &", pybind11::return_value_policy::automatic);
-		cl.def("back", (struct CPoint3D & (std::vector<CPoint3D>::*)()) &std::vector<CPoint3D, std::allocator<CPoint3D> >::back, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::back() --> struct CPoint3D &", pybind11::return_value_policy::automatic);
-		cl.def("data", (struct CPoint3D * (std::vector<CPoint3D>::*)()) &std::vector<CPoint3D, std::allocator<CPoint3D> >::data, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::data() --> struct CPoint3D *", pybind11::return_value_policy::automatic);
-		cl.def("push_back", (void (std::vector<CPoint3D>::*)(const struct CPoint3D &)) &std::vector<CPoint3D, std::allocator<CPoint3D> >::push_back, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::push_back(const struct CPoint3D &) --> void", pybind11::arg("__x"));
-		cl.def("pop_back", (void (std::vector<CPoint3D>::*)()) &std::vector<CPoint3D, std::allocator<CPoint3D> >::pop_back, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::pop_back() --> void");
-		cl.def("insert", (class __gnu_cxx::__normal_iterator<struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > > (std::vector<CPoint3D>::*)(class __gnu_cxx::__normal_iterator<const struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >, const struct CPoint3D &)) &std::vector<CPoint3D, std::allocator<CPoint3D> >::insert, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::insert(class __gnu_cxx::__normal_iterator<const struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >, const struct CPoint3D &) --> class __gnu_cxx::__normal_iterator<struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >", pybind11::arg("__position"), pybind11::arg("__x"));
-		cl.def("insert", (class __gnu_cxx::__normal_iterator<struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > > (std::vector<CPoint3D>::*)(class __gnu_cxx::__normal_iterator<const struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >, class std::initializer_list<struct CPoint3D>)) &std::vector<CPoint3D, std::allocator<CPoint3D> >::insert, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::insert(class __gnu_cxx::__normal_iterator<const struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >, class std::initializer_list<struct CPoint3D>) --> class __gnu_cxx::__normal_iterator<struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >", pybind11::arg("__position"), pybind11::arg("__l"));
-		cl.def("insert", (class __gnu_cxx::__normal_iterator<struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > > (std::vector<CPoint3D>::*)(class __gnu_cxx::__normal_iterator<const struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >, unsigned long, const struct CPoint3D &)) &std::vector<CPoint3D, std::allocator<CPoint3D> >::insert, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::insert(class __gnu_cxx::__normal_iterator<const struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >, unsigned long, const struct CPoint3D &) --> class __gnu_cxx::__normal_iterator<struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >", pybind11::arg("__position"), pybind11::arg("__n"), pybind11::arg("__x"));
-		cl.def("erase", (class __gnu_cxx::__normal_iterator<struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > > (std::vector<CPoint3D>::*)(class __gnu_cxx::__normal_iterator<const struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >)) &std::vector<CPoint3D, std::allocator<CPoint3D> >::erase, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::erase(class __gnu_cxx::__normal_iterator<const struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >) --> class __gnu_cxx::__normal_iterator<struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >", pybind11::arg("__position"));
-		cl.def("erase", (class __gnu_cxx::__normal_iterator<struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > > (std::vector<CPoint3D>::*)(class __gnu_cxx::__normal_iterator<const struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >, class __gnu_cxx::__normal_iterator<const struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >)) &std::vector<CPoint3D, std::allocator<CPoint3D> >::erase, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::erase(class __gnu_cxx::__normal_iterator<const struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >, class __gnu_cxx::__normal_iterator<const struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >) --> class __gnu_cxx::__normal_iterator<struct CPoint3D *, class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > >", pybind11::arg("__first"), pybind11::arg("__last"));
-		cl.def("swap", (void (std::vector<CPoint3D>::*)(class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > &)) &std::vector<CPoint3D, std::allocator<CPoint3D> >::swap, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::swap(class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> > &) --> void", pybind11::arg("__x"));
-		cl.def("clear", (void (std::vector<CPoint3D>::*)()) &std::vector<CPoint3D, std::allocator<CPoint3D> >::clear, "C++: std::vector<CPoint3D, std::allocator<CPoint3D> >::clear() --> void");
-	}
-	{ // std::vector file:bits/stl_vector.h line:214
-		pybind11::class_<std::vector<CFace>, std::shared_ptr<std::vector<CFace>>> cl(M("std"), "vector_CFace_t", "");
-		pybind11::handle cl_type = cl;
-
-		cl.def(pybind11::init<>());
-
-		cl.def(pybind11::init<const class std::allocator<struct CFace> &>(), pybind11::arg("__a"));
-
-		cl.def("__init__", [](std::vector<CFace> *self_, unsigned long  const &a0) { new (self_) std::vector<CFace>(a0); }, "doc");
-		cl.def(pybind11::init<unsigned long, const class std::allocator<struct CFace> &>(), pybind11::arg("__n"), pybind11::arg("__a"));
-
-		cl.def("__init__", [](std::vector<CFace> *self_, unsigned long  const &a0, const struct CFace & a1) { new (self_) std::vector<CFace>(a0, a1); }, "doc");
-		cl.def(pybind11::init<unsigned long, const struct CFace &, const class std::allocator<struct CFace> &>(), pybind11::arg("__n"), pybind11::arg("__value"), pybind11::arg("__a"));
-
-		cl.def(pybind11::init<const class std::vector<struct CFace, class std::allocator<struct CFace> > &>(), pybind11::arg("__x"));
-
-		cl.def(pybind11::init<const class std::vector<struct CFace, class std::allocator<struct CFace> > &, const class std::allocator<struct CFace> &>(), pybind11::arg("__x"), pybind11::arg("__a"));
-
-		cl.def("__init__", [](std::vector<CFace> *self_, class std::initializer_list<struct CFace>  const &a0) { new (self_) std::vector<CFace>(a0); }, "doc");
-		cl.def(pybind11::init<class std::initializer_list<struct CFace>, const class std::allocator<struct CFace> &>(), pybind11::arg("__l"), pybind11::arg("__a"));
-
-		cl.def("get_allocator", (class std::allocator<struct CFace> (std::_Vector_base<CFace,std::allocator<CFace>>::*)() const) &std::vector<CFace>::get_allocator, "C++: std::_Vector_base<CFace, std::allocator<CFace> >::get_allocator() const --> class std::allocator<struct CFace>");
-		cl.def("assign", (class std::vector<struct CFace, class std::allocator<struct CFace> > & (std::vector<CFace>::*)(const class std::vector<struct CFace, class std::allocator<struct CFace> > &)) &std::vector<CFace, std::allocator<CFace> >::operator=, "C++: std::vector<CFace, std::allocator<CFace> >::operator=(const class std::vector<struct CFace, class std::allocator<struct CFace> > &) --> class std::vector<struct CFace, class std::allocator<struct CFace> > &", pybind11::return_value_policy::automatic, pybind11::arg("__x"));
-		cl.def("assign", (class std::vector<struct CFace, class std::allocator<struct CFace> > & (std::vector<CFace>::*)(class std::initializer_list<struct CFace>)) &std::vector<CFace, std::allocator<CFace> >::operator=, "C++: std::vector<CFace, std::allocator<CFace> >::operator=(class std::initializer_list<struct CFace>) --> class std::vector<struct CFace, class std::allocator<struct CFace> > &", pybind11::return_value_policy::automatic, pybind11::arg("__l"));
-		cl.def("assign", (void (std::vector<CFace>::*)(unsigned long, const struct CFace &)) &std::vector<CFace, std::allocator<CFace> >::assign, "C++: std::vector<CFace, std::allocator<CFace> >::assign(unsigned long, const struct CFace &) --> void", pybind11::arg("__n"), pybind11::arg("__val"));
-		cl.def("assign", (void (std::vector<CFace>::*)(class std::initializer_list<struct CFace>)) &std::vector<CFace, std::allocator<CFace> >::assign, "C++: std::vector<CFace, std::allocator<CFace> >::assign(class std::initializer_list<struct CFace>) --> void", pybind11::arg("__l"));
-		cl.def("begin", (class __gnu_cxx::__normal_iterator<struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > > (std::vector<CFace>::*)()) &std::vector<CFace, std::allocator<CFace> >::begin, "C++: std::vector<CFace, std::allocator<CFace> >::begin() --> class __gnu_cxx::__normal_iterator<struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >");
-		cl.def("end", (class __gnu_cxx::__normal_iterator<struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > > (std::vector<CFace>::*)()) &std::vector<CFace, std::allocator<CFace> >::end, "C++: std::vector<CFace, std::allocator<CFace> >::end() --> class __gnu_cxx::__normal_iterator<struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >");
-		cl.def("cbegin", (class __gnu_cxx::__normal_iterator<const struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > > (std::vector<CFace>::*)() const) &std::vector<CFace, std::allocator<CFace> >::cbegin, "C++: std::vector<CFace, std::allocator<CFace> >::cbegin() const --> class __gnu_cxx::__normal_iterator<const struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >");
-		cl.def("cend", (class __gnu_cxx::__normal_iterator<const struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > > (std::vector<CFace>::*)() const) &std::vector<CFace, std::allocator<CFace> >::cend, "C++: std::vector<CFace, std::allocator<CFace> >::cend() const --> class __gnu_cxx::__normal_iterator<const struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >");
-		cl.def("size", (unsigned long (std::vector<CFace>::*)() const) &std::vector<CFace, std::allocator<CFace> >::size, "C++: std::vector<CFace, std::allocator<CFace> >::size() const --> unsigned long");
-		cl.def("max_size", (unsigned long (std::vector<CFace>::*)() const) &std::vector<CFace, std::allocator<CFace> >::max_size, "C++: std::vector<CFace, std::allocator<CFace> >::max_size() const --> unsigned long");
-		cl.def("resize", (void (std::vector<CFace>::*)(unsigned long)) &std::vector<CFace, std::allocator<CFace> >::resize, "C++: std::vector<CFace, std::allocator<CFace> >::resize(unsigned long) --> void", pybind11::arg("__new_size"));
-		cl.def("resize", (void (std::vector<CFace>::*)(unsigned long, const struct CFace &)) &std::vector<CFace, std::allocator<CFace> >::resize, "C++: std::vector<CFace, std::allocator<CFace> >::resize(unsigned long, const struct CFace &) --> void", pybind11::arg("__new_size"), pybind11::arg("__x"));
-		cl.def("shrink_to_fit", (void (std::vector<CFace>::*)()) &std::vector<CFace, std::allocator<CFace> >::shrink_to_fit, "C++: std::vector<CFace, std::allocator<CFace> >::shrink_to_fit() --> void");
-		cl.def("capacity", (unsigned long (std::vector<CFace>::*)() const) &std::vector<CFace, std::allocator<CFace> >::capacity, "C++: std::vector<CFace, std::allocator<CFace> >::capacity() const --> unsigned long");
-		cl.def("empty", (bool (std::vector<CFace>::*)() const) &std::vector<CFace, std::allocator<CFace> >::empty, "C++: std::vector<CFace, std::allocator<CFace> >::empty() const --> bool");
-		cl.def("reserve", (void (std::vector<CFace>::*)(unsigned long)) &std::vector<CFace, std::allocator<CFace> >::reserve, "C++: std::vector<CFace, std::allocator<CFace> >::reserve(unsigned long) --> void", pybind11::arg("__n"));
-		cl.def("__getitem__", (struct CFace & (std::vector<CFace>::*)(unsigned long)) &std::vector<CFace, std::allocator<CFace> >::operator[], "C++: std::vector<CFace, std::allocator<CFace> >::operator[](unsigned long) --> struct CFace &", pybind11::return_value_policy::automatic, pybind11::arg("__n"));
-		cl.def("at", (struct CFace & (std::vector<CFace>::*)(unsigned long)) &std::vector<CFace, std::allocator<CFace> >::at, "C++: std::vector<CFace, std::allocator<CFace> >::at(unsigned long) --> struct CFace &", pybind11::return_value_policy::automatic, pybind11::arg("__n"));
-		cl.def("front", (struct CFace & (std::vector<CFace>::*)()) &std::vector<CFace, std::allocator<CFace> >::front, "C++: std::vector<CFace, std::allocator<CFace> >::front() --> struct CFace &", pybind11::return_value_policy::automatic);
-		cl.def("back", (struct CFace & (std::vector<CFace>::*)()) &std::vector<CFace, std::allocator<CFace> >::back, "C++: std::vector<CFace, std::allocator<CFace> >::back() --> struct CFace &", pybind11::return_value_policy::automatic);
-		cl.def("data", (struct CFace * (std::vector<CFace>::*)()) &std::vector<CFace, std::allocator<CFace> >::data, "C++: std::vector<CFace, std::allocator<CFace> >::data() --> struct CFace *", pybind11::return_value_policy::automatic);
-		cl.def("push_back", (void (std::vector<CFace>::*)(const struct CFace &)) &std::vector<CFace, std::allocator<CFace> >::push_back, "C++: std::vector<CFace, std::allocator<CFace> >::push_back(const struct CFace &) --> void", pybind11::arg("__x"));
-		cl.def("pop_back", (void (std::vector<CFace>::*)()) &std::vector<CFace, std::allocator<CFace> >::pop_back, "C++: std::vector<CFace, std::allocator<CFace> >::pop_back() --> void");
-		cl.def("insert", (class __gnu_cxx::__normal_iterator<struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > > (std::vector<CFace>::*)(class __gnu_cxx::__normal_iterator<const struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >, const struct CFace &)) &std::vector<CFace, std::allocator<CFace> >::insert, "C++: std::vector<CFace, std::allocator<CFace> >::insert(class __gnu_cxx::__normal_iterator<const struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >, const struct CFace &) --> class __gnu_cxx::__normal_iterator<struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >", pybind11::arg("__position"), pybind11::arg("__x"));
-		cl.def("insert", (class __gnu_cxx::__normal_iterator<struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > > (std::vector<CFace>::*)(class __gnu_cxx::__normal_iterator<const struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >, class std::initializer_list<struct CFace>)) &std::vector<CFace, std::allocator<CFace> >::insert, "C++: std::vector<CFace, std::allocator<CFace> >::insert(class __gnu_cxx::__normal_iterator<const struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >, class std::initializer_list<struct CFace>) --> class __gnu_cxx::__normal_iterator<struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >", pybind11::arg("__position"), pybind11::arg("__l"));
-		cl.def("insert", (class __gnu_cxx::__normal_iterator<struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > > (std::vector<CFace>::*)(class __gnu_cxx::__normal_iterator<const struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >, unsigned long, const struct CFace &)) &std::vector<CFace, std::allocator<CFace> >::insert, "C++: std::vector<CFace, std::allocator<CFace> >::insert(class __gnu_cxx::__normal_iterator<const struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >, unsigned long, const struct CFace &) --> class __gnu_cxx::__normal_iterator<struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >", pybind11::arg("__position"), pybind11::arg("__n"), pybind11::arg("__x"));
-		cl.def("erase", (class __gnu_cxx::__normal_iterator<struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > > (std::vector<CFace>::*)(class __gnu_cxx::__normal_iterator<const struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >)) &std::vector<CFace, std::allocator<CFace> >::erase, "C++: std::vector<CFace, std::allocator<CFace> >::erase(class __gnu_cxx::__normal_iterator<const struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >) --> class __gnu_cxx::__normal_iterator<struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >", pybind11::arg("__position"));
-		cl.def("erase", (class __gnu_cxx::__normal_iterator<struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > > (std::vector<CFace>::*)(class __gnu_cxx::__normal_iterator<const struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >, class __gnu_cxx::__normal_iterator<const struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >)) &std::vector<CFace, std::allocator<CFace> >::erase, "C++: std::vector<CFace, std::allocator<CFace> >::erase(class __gnu_cxx::__normal_iterator<const struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >, class __gnu_cxx::__normal_iterator<const struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >) --> class __gnu_cxx::__normal_iterator<struct CFace *, class std::vector<struct CFace, class std::allocator<struct CFace> > >", pybind11::arg("__first"), pybind11::arg("__last"));
-		cl.def("swap", (void (std::vector<CFace>::*)(class std::vector<struct CFace, class std::allocator<struct CFace> > &)) &std::vector<CFace, std::allocator<CFace> >::swap, "C++: std::vector<CFace, std::allocator<CFace> >::swap(class std::vector<struct CFace, class std::allocator<struct CFace> > &) --> void", pybind11::arg("__x"));
-		cl.def("clear", (void (std::vector<CFace>::*)()) &std::vector<CFace, std::allocator<CFace> >::clear, "C++: std::vector<CFace, std::allocator<CFace> >::clear() --> void");
-	}
-}
-
-
-// File: std/stl_vector_1.cpp
-#include <ExactMethodForDGP.hpp> // InfoAtVertex
-#include <ExactMethodForDGP.hpp> // InfoAtVertex::InfoAtVertex
-#include <ExactMethodForDGP.hpp> // InfoAtVertex::operator=
-#include <Point3D.hpp> // CPoint3D
-#include <RichModel.hpp> // CEdge
-#include <RichModel.hpp> // CEdge::CEdge
-#include <RichModel.hpp> // CEdge::operator=
-#include <RichModel.hpp> // CRichModel
-#include <RichModel.hpp> // EdgePoint
-#include <RichModel.hpp> // EdgePoint::EdgePoint
-#include <RichModel.hpp> // EdgePoint::Get3DPoint
-#include <RichModel.hpp> // EdgePoint::operator=
-#include <initializer_list> // std::initializer_list
-#include <initializer_list> // std::initializer_list<CEdge>::begin
-#include <initializer_list> // std::initializer_list<CEdge>::end
-#include <initializer_list> // std::initializer_list<CEdge>::initializer_list
-#include <initializer_list> // std::initializer_list<CEdge>::size
-#include <initializer_list> // std::initializer_list<bool>::begin
-#include <initializer_list> // std::initializer_list<bool>::end
-#include <initializer_list> // std::initializer_list<bool>::initializer_list
-#include <initializer_list> // std::initializer_list<bool>::size
-#include <initializer_list> // std::initializer_list<int>::begin
-#include <initializer_list> // std::initializer_list<int>::end
-#include <initializer_list> // std::initializer_list<int>::initializer_list
-#include <initializer_list> // std::initializer_list<int>::size
-#include <initializer_list> // std::initializer_list<std::pair<int, double> >::begin
-#include <initializer_list> // std::initializer_list<std::pair<int, double> >::end
-#include <initializer_list> // std::initializer_list<std::pair<int, double> >::initializer_list
-#include <initializer_list> // std::initializer_list<std::pair<int, double> >::size
-#include <iterator> // __gnu_cxx::__normal_iterator
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::__normal_iterator
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::base
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::operator*
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::operator+
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::operator++
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::operator+=
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::operator-
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::operator--
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::operator-=
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::operator[]
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::__normal_iterator
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::base
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::operator*
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::operator+
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::operator++
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::operator+=
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::operator-
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::operator--
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::operator-=
+#include <iterator> // __gnu_cxx::__normal_iterator<QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::operator[]
 #include <iterator> // __gnu_cxx::__normal_iterator<const CEdge *, std::vector<CEdge, std::allocator<CEdge> > >::__normal_iterator
 #include <iterator> // __gnu_cxx::__normal_iterator<const CEdge *, std::vector<CEdge, std::allocator<CEdge> > >::base
 #include <iterator> // __gnu_cxx::__normal_iterator<const CEdge *, std::vector<CEdge, std::allocator<CEdge> > >::operator*
@@ -272,6 +115,36 @@ void bind_std_stl_vector(std::function< pybind11::module &(std::string const &na
 #include <iterator> // __gnu_cxx::__normal_iterator<const CEdge *, std::vector<CEdge, std::allocator<CEdge> > >::operator--
 #include <iterator> // __gnu_cxx::__normal_iterator<const CEdge *, std::vector<CEdge, std::allocator<CEdge> > >::operator-=
 #include <iterator> // __gnu_cxx::__normal_iterator<const CEdge *, std::vector<CEdge, std::allocator<CEdge> > >::operator[]
+#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::__normal_iterator
+#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::base
+#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator*
+#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator+
+#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator++
+#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator+=
+#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator-
+#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator--
+#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator-=
+#include <iterator> // __gnu_cxx::__normal_iterator<const CPoint3D *, std::vector<CPoint3D, std::allocator<CPoint3D> > >::operator[]
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::__normal_iterator
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::base
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::operator*
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::operator+
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::operator++
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::operator+=
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::operator-
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::operator--
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::operator-=
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteInfoAtVertex *, std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> > >::operator[]
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::__normal_iterator
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::base
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::operator*
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::operator+
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::operator++
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::operator+=
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::operator-
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::operator--
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::operator-=
+#include <iterator> // __gnu_cxx::__normal_iterator<const QuoteWindow *, std::vector<QuoteWindow, std::allocator<QuoteWindow> > >::operator[]
 #include <iterator> // __gnu_cxx::__normal_iterator<const std::pair<int, double> *, std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > > >::__normal_iterator
 #include <iterator> // __gnu_cxx::__normal_iterator<const std::pair<int, double> *, std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > > >::base
 #include <iterator> // __gnu_cxx::__normal_iterator<const std::pair<int, double> *, std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > > >::operator*
@@ -337,10 +210,20 @@ void bind_std_stl_vector(std::function< pybind11::module &(std::string const &na
 #include <memory> // std::allocator
 #include <memory> // std::allocator<CEdge>::allocator
 #include <memory> // std::allocator<CEdge>::operator=
+#include <memory> // std::allocator<CFace>::allocator
+#include <memory> // std::allocator<CFace>::operator=
+#include <memory> // std::allocator<CPoint3D>::allocator
+#include <memory> // std::allocator<CPoint3D>::operator=
 #include <memory> // std::allocator<EdgePoint>::allocator
 #include <memory> // std::allocator<EdgePoint>::operator=
+#include <memory> // std::allocator<InfoAtAngle>::allocator
+#include <memory> // std::allocator<InfoAtAngle>::operator=
 #include <memory> // std::allocator<InfoAtVertex>::allocator
 #include <memory> // std::allocator<InfoAtVertex>::operator=
+#include <memory> // std::allocator<QuoteInfoAtVertex>::allocator
+#include <memory> // std::allocator<QuoteInfoAtVertex>::operator=
+#include <memory> // std::allocator<QuoteWindow>::allocator
+#include <memory> // std::allocator<QuoteWindow>::operator=
 #include <memory> // std::allocator<bool>::allocator
 #include <memory> // std::allocator<int>::allocator
 #include <memory> // std::allocator<int>::operator=
@@ -407,6 +290,56 @@ void bind_std_stl_vector(std::function< pybind11::module &(std::string const &na
 #include <vector> // std::vector<CEdge, std::allocator<CEdge> >::size
 #include <vector> // std::vector<CEdge, std::allocator<CEdge> >::swap
 #include <vector> // std::vector<CEdge, std::allocator<CEdge> >::vector
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::assign
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::at
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::back
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::begin
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::capacity
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::cbegin
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::cend
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::clear
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::data
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::empty
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::end
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::erase
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::front
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::insert
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::max_size
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::operator=
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::operator[]
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::pop_back
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::push_back
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::reserve
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::resize
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::shrink_to_fit
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::size
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::swap
+#include <vector> // std::vector<CFace, std::allocator<CFace> >::vector
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::assign
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::at
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::back
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::begin
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::capacity
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::cbegin
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::cend
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::clear
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::data
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::empty
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::end
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::erase
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::front
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::insert
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::max_size
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::operator=
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::operator[]
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::pop_back
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::push_back
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::reserve
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::resize
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::shrink_to_fit
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::size
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::swap
+#include <vector> // std::vector<CPoint3D, std::allocator<CPoint3D> >::vector
 #include <vector> // std::vector<EdgePoint, std::allocator<EdgePoint> >::assign
 #include <vector> // std::vector<EdgePoint, std::allocator<EdgePoint> >::at
 #include <vector> // std::vector<EdgePoint, std::allocator<EdgePoint> >::back
@@ -432,6 +365,31 @@ void bind_std_stl_vector(std::function< pybind11::module &(std::string const &na
 #include <vector> // std::vector<EdgePoint, std::allocator<EdgePoint> >::size
 #include <vector> // std::vector<EdgePoint, std::allocator<EdgePoint> >::swap
 #include <vector> // std::vector<EdgePoint, std::allocator<EdgePoint> >::vector
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::assign
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::at
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::back
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::begin
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::capacity
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::cbegin
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::cend
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::clear
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::data
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::empty
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::end
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::erase
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::front
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::insert
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::max_size
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::operator=
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::operator[]
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::pop_back
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::push_back
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::reserve
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::resize
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::shrink_to_fit
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::size
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::swap
+#include <vector> // std::vector<InfoAtAngle, std::allocator<InfoAtAngle> >::vector
 #include <vector> // std::vector<InfoAtVertex, std::allocator<InfoAtVertex> >::assign
 #include <vector> // std::vector<InfoAtVertex, std::allocator<InfoAtVertex> >::at
 #include <vector> // std::vector<InfoAtVertex, std::allocator<InfoAtVertex> >::back
@@ -457,6 +415,56 @@ void bind_std_stl_vector(std::function< pybind11::module &(std::string const &na
 #include <vector> // std::vector<InfoAtVertex, std::allocator<InfoAtVertex> >::size
 #include <vector> // std::vector<InfoAtVertex, std::allocator<InfoAtVertex> >::swap
 #include <vector> // std::vector<InfoAtVertex, std::allocator<InfoAtVertex> >::vector
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::assign
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::at
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::back
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::begin
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::capacity
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::cbegin
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::cend
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::clear
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::data
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::empty
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::end
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::erase
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::front
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::insert
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::max_size
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::operator=
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::operator[]
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::pop_back
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::push_back
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::reserve
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::resize
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::shrink_to_fit
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::size
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::swap
+#include <vector> // std::vector<QuoteInfoAtVertex, std::allocator<QuoteInfoAtVertex> >::vector
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::assign
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::at
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::back
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::begin
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::capacity
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::cbegin
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::cend
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::clear
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::data
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::empty
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::end
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::erase
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::front
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::insert
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::max_size
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::operator=
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::operator[]
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::pop_back
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::push_back
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::reserve
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::resize
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::shrink_to_fit
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::size
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::swap
+#include <vector> // std::vector<QuoteWindow, std::allocator<QuoteWindow> >::vector
 #include <vector> // std::vector<bool, std::allocator<bool> >::assign
 #include <vector> // std::vector<bool, std::allocator<bool> >::at
 #include <vector> // std::vector<bool, std::allocator<bool> >::back
@@ -589,6 +597,7 @@ void bind_std_stl_vector(std::function< pybind11::module &(std::string const &na
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <stl_binders.hpp>
 
 
 #ifndef BINDER_PYBIND11_TYPE_CASTER
@@ -598,106 +607,20 @@ void bind_std_stl_vector(std::function< pybind11::module &(std::string const &na
 	PYBIND11_MAKE_OPAQUE(std::shared_ptr<void>);
 #endif
 
-void bind_std_stl_vector_1(std::function< pybind11::module &(std::string const &namespace_) > &M)
+void bind_std_stl_vector(std::function< pybind11::module &(std::string const &namespace_) > &M)
 {
-	{ // std::vector file:bits/stl_vector.h line:214
-		pybind11::class_<std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>, std::shared_ptr<std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>>> cl(M("std"), "vector_std_pair_int_double_std_allocator_std_pair_int_double_t", "");
-		pybind11::handle cl_type = cl;
+	// std::vector file:bits/stl_vector.h line:214
+	binder::vector_binder<CPoint3D,std::allocator<CPoint3D>>(M("std"), "CPoint3D", "std_allocator_CPoint3D_t");
 
-		cl.def(pybind11::init<>());
+	// std::vector file:bits/stl_vector.h line:214
+	binder::vector_binder<CFace,std::allocator<CFace>>(M("std"), "CFace", "std_allocator_CFace_t");
 
-		cl.def(pybind11::init<const class std::allocator<struct std::pair<int, double> > &>(), pybind11::arg("__a"));
+	// std::vector file:bits/stl_vector.h line:214
+	binder::vector_binder<std::pair<int, double>,std::allocator<std::pair<int, double> >>(M("std"), "std_pair_int_double_t", "std_allocator_std_pair_int_double_t");
 
-		cl.def("__init__", [](std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >> *self_, unsigned long  const &a0) { new (self_) std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>(a0); }, "doc");
-		cl.def(pybind11::init<unsigned long, const class std::allocator<struct std::pair<int, double> > &>(), pybind11::arg("__n"), pybind11::arg("__a"));
+	// std::vector file:bits/stl_vector.h line:214
+	binder::vector_binder<EdgePoint,std::allocator<EdgePoint>>(M("std"), "EdgePoint", "std_allocator_EdgePoint_t");
 
-		cl.def("__init__", [](std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >> *self_, unsigned long  const &a0, const struct std::pair<int, double> & a1) { new (self_) std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>(a0, a1); }, "doc");
-		cl.def(pybind11::init<unsigned long, const struct std::pair<int, double> &, const class std::allocator<struct std::pair<int, double> > &>(), pybind11::arg("__n"), pybind11::arg("__value"), pybind11::arg("__a"));
-
-		cl.def(pybind11::init<const class std::vector<struct std::pair<int, double>, class std::allocator<struct std::pair<int, double> > > &>(), pybind11::arg("__x"));
-
-		cl.def(pybind11::init<const class std::vector<struct std::pair<int, double>, class std::allocator<struct std::pair<int, double> > > &, const class std::allocator<struct std::pair<int, double> > &>(), pybind11::arg("__x"), pybind11::arg("__a"));
-
-		cl.def("__init__", [](std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >> *self_, class std::initializer_list<struct std::pair<int, double> >  const &a0) { new (self_) std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>(a0); }, "doc");
-		cl.def(pybind11::init<class std::initializer_list<struct std::pair<int, double> >, const class std::allocator<struct std::pair<int, double> > &>(), pybind11::arg("__l"), pybind11::arg("__a"));
-
-		cl.def("get_allocator", (class std::allocator<struct std::pair<int, double> > (std::_Vector_base<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)() const) &std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::get_allocator, "C++: std::_Vector_base<std::pair<int, double>, std::allocator<std::pair<int, double> > >::get_allocator() const --> class std::allocator<struct std::pair<int, double> >");
-		cl.def("assign", (class std::vector<struct std::pair<int, double>, class std::allocator<struct std::pair<int, double> > > & (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)(const class std::vector<struct std::pair<int, double>, class std::allocator<struct std::pair<int, double> > > &)) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::operator=, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::operator=(const class std::vector<struct std::pair<int, double>, class std::allocator<struct std::pair<int, double> > > &) --> class std::vector<struct std::pair<int, double>, class std::allocator<struct std::pair<int, double> > > &", pybind11::return_value_policy::automatic, pybind11::arg("__x"));
-		cl.def("assign", (class std::vector<struct std::pair<int, double>, class std::allocator<struct std::pair<int, double> > > & (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)(class std::initializer_list<struct std::pair<int, double> >)) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::operator=, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::operator=(class std::initializer_list<struct std::pair<int, double> >) --> class std::vector<struct std::pair<int, double>, class std::allocator<struct std::pair<int, double> > > &", pybind11::return_value_policy::automatic, pybind11::arg("__l"));
-		cl.def("assign", (void (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)(unsigned long, const struct std::pair<int, double> &)) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::assign, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::assign(unsigned long, const struct std::pair<int, double> &) --> void", pybind11::arg("__n"), pybind11::arg("__val"));
-		cl.def("assign", (void (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)(class std::initializer_list<struct std::pair<int, double> >)) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::assign, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::assign(class std::initializer_list<struct std::pair<int, double> >) --> void", pybind11::arg("__l"));
-		cl.def("cbegin", (class __gnu_cxx::__normal_iterator<const struct std::pair<int, double> *, class std::vector<struct std::pair<int, double>, class std::allocator<struct std::pair<int, double> > > > (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)() const) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::cbegin, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::cbegin() const --> class __gnu_cxx::__normal_iterator<const struct std::pair<int, double> *, class std::vector<struct std::pair<int, double>, class std::allocator<struct std::pair<int, double> > > >");
-		cl.def("cend", (class __gnu_cxx::__normal_iterator<const struct std::pair<int, double> *, class std::vector<struct std::pair<int, double>, class std::allocator<struct std::pair<int, double> > > > (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)() const) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::cend, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::cend() const --> class __gnu_cxx::__normal_iterator<const struct std::pair<int, double> *, class std::vector<struct std::pair<int, double>, class std::allocator<struct std::pair<int, double> > > >");
-		cl.def("size", (unsigned long (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)() const) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::size, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::size() const --> unsigned long");
-		cl.def("max_size", (unsigned long (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)() const) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::max_size, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::max_size() const --> unsigned long");
-		cl.def("resize", (void (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)(unsigned long)) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::resize, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::resize(unsigned long) --> void", pybind11::arg("__new_size"));
-		cl.def("resize", (void (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)(unsigned long, const struct std::pair<int, double> &)) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::resize, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::resize(unsigned long, const struct std::pair<int, double> &) --> void", pybind11::arg("__new_size"), pybind11::arg("__x"));
-		cl.def("shrink_to_fit", (void (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)()) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::shrink_to_fit, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::shrink_to_fit() --> void");
-		cl.def("capacity", (unsigned long (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)() const) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::capacity, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::capacity() const --> unsigned long");
-		cl.def("empty", (bool (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)() const) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::empty, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::empty() const --> bool");
-		cl.def("reserve", (void (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)(unsigned long)) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::reserve, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::reserve(unsigned long) --> void", pybind11::arg("__n"));
-		cl.def("__getitem__", (struct std::pair<int, double> & (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)(unsigned long)) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::operator[], "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::operator[](unsigned long) --> struct std::pair<int, double> &", pybind11::return_value_policy::automatic, pybind11::arg("__n"));
-		cl.def("at", (struct std::pair<int, double> & (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)(unsigned long)) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::at, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::at(unsigned long) --> struct std::pair<int, double> &", pybind11::return_value_policy::automatic, pybind11::arg("__n"));
-		cl.def("front", (struct std::pair<int, double> & (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)()) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::front, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::front() --> struct std::pair<int, double> &", pybind11::return_value_policy::automatic);
-		cl.def("back", (struct std::pair<int, double> & (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)()) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::back, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::back() --> struct std::pair<int, double> &", pybind11::return_value_policy::automatic);
-		cl.def("push_back", (void (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)(const struct std::pair<int, double> &)) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::push_back, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::push_back(const struct std::pair<int, double> &) --> void", pybind11::arg("__x"));
-		cl.def("pop_back", (void (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)()) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::pop_back, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::pop_back() --> void");
-		cl.def("swap", (void (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)(class std::vector<struct std::pair<int, double>, class std::allocator<struct std::pair<int, double> > > &)) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::swap, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::swap(class std::vector<struct std::pair<int, double>, class std::allocator<struct std::pair<int, double> > > &) --> void", pybind11::arg("__x"));
-		cl.def("clear", (void (std::vector<std::pair<int, double>,std::allocator<std::pair<int, double> >>::*)()) &std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::clear, "C++: std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::clear() --> void");
-	}
-	{ // std::vector file:bits/stl_vector.h line:214
-		pybind11::class_<std::vector<EdgePoint>, std::shared_ptr<std::vector<EdgePoint>>> cl(M("std"), "vector_EdgePoint_t", "");
-		pybind11::handle cl_type = cl;
-
-		cl.def(pybind11::init<>());
-
-		cl.def(pybind11::init<const class std::allocator<struct EdgePoint> &>(), pybind11::arg("__a"));
-
-		cl.def("__init__", [](std::vector<EdgePoint> *self_, unsigned long  const &a0) { new (self_) std::vector<EdgePoint>(a0); }, "doc");
-		cl.def(pybind11::init<unsigned long, const class std::allocator<struct EdgePoint> &>(), pybind11::arg("__n"), pybind11::arg("__a"));
-
-		cl.def("__init__", [](std::vector<EdgePoint> *self_, unsigned long  const &a0, const struct EdgePoint & a1) { new (self_) std::vector<EdgePoint>(a0, a1); }, "doc");
-		cl.def(pybind11::init<unsigned long, const struct EdgePoint &, const class std::allocator<struct EdgePoint> &>(), pybind11::arg("__n"), pybind11::arg("__value"), pybind11::arg("__a"));
-
-		cl.def(pybind11::init<const class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > &>(), pybind11::arg("__x"));
-
-		cl.def(pybind11::init<const class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > &, const class std::allocator<struct EdgePoint> &>(), pybind11::arg("__x"), pybind11::arg("__a"));
-
-		cl.def("__init__", [](std::vector<EdgePoint> *self_, class std::initializer_list<struct EdgePoint>  const &a0) { new (self_) std::vector<EdgePoint>(a0); }, "doc");
-		cl.def(pybind11::init<class std::initializer_list<struct EdgePoint>, const class std::allocator<struct EdgePoint> &>(), pybind11::arg("__l"), pybind11::arg("__a"));
-
-		cl.def("get_allocator", (class std::allocator<struct EdgePoint> (std::_Vector_base<EdgePoint,std::allocator<EdgePoint>>::*)() const) &std::vector<EdgePoint>::get_allocator, "C++: std::_Vector_base<EdgePoint, std::allocator<EdgePoint> >::get_allocator() const --> class std::allocator<struct EdgePoint>");
-		cl.def("assign", (class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > & (std::vector<EdgePoint>::*)(const class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > &)) &std::vector<EdgePoint, std::allocator<EdgePoint> >::operator=, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::operator=(const class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > &) --> class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > &", pybind11::return_value_policy::automatic, pybind11::arg("__x"));
-		cl.def("assign", (class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > & (std::vector<EdgePoint>::*)(class std::initializer_list<struct EdgePoint>)) &std::vector<EdgePoint, std::allocator<EdgePoint> >::operator=, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::operator=(class std::initializer_list<struct EdgePoint>) --> class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > &", pybind11::return_value_policy::automatic, pybind11::arg("__l"));
-		cl.def("assign", (void (std::vector<EdgePoint>::*)(unsigned long, const struct EdgePoint &)) &std::vector<EdgePoint, std::allocator<EdgePoint> >::assign, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::assign(unsigned long, const struct EdgePoint &) --> void", pybind11::arg("__n"), pybind11::arg("__val"));
-		cl.def("assign", (void (std::vector<EdgePoint>::*)(class std::initializer_list<struct EdgePoint>)) &std::vector<EdgePoint, std::allocator<EdgePoint> >::assign, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::assign(class std::initializer_list<struct EdgePoint>) --> void", pybind11::arg("__l"));
-		cl.def("begin", (class __gnu_cxx::__normal_iterator<struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > > (std::vector<EdgePoint>::*)()) &std::vector<EdgePoint, std::allocator<EdgePoint> >::begin, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::begin() --> class __gnu_cxx::__normal_iterator<struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >");
-		cl.def("end", (class __gnu_cxx::__normal_iterator<struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > > (std::vector<EdgePoint>::*)()) &std::vector<EdgePoint, std::allocator<EdgePoint> >::end, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::end() --> class __gnu_cxx::__normal_iterator<struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >");
-		cl.def("cbegin", (class __gnu_cxx::__normal_iterator<const struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > > (std::vector<EdgePoint>::*)() const) &std::vector<EdgePoint, std::allocator<EdgePoint> >::cbegin, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::cbegin() const --> class __gnu_cxx::__normal_iterator<const struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >");
-		cl.def("cend", (class __gnu_cxx::__normal_iterator<const struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > > (std::vector<EdgePoint>::*)() const) &std::vector<EdgePoint, std::allocator<EdgePoint> >::cend, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::cend() const --> class __gnu_cxx::__normal_iterator<const struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >");
-		cl.def("size", (unsigned long (std::vector<EdgePoint>::*)() const) &std::vector<EdgePoint, std::allocator<EdgePoint> >::size, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::size() const --> unsigned long");
-		cl.def("max_size", (unsigned long (std::vector<EdgePoint>::*)() const) &std::vector<EdgePoint, std::allocator<EdgePoint> >::max_size, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::max_size() const --> unsigned long");
-		cl.def("resize", (void (std::vector<EdgePoint>::*)(unsigned long)) &std::vector<EdgePoint, std::allocator<EdgePoint> >::resize, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::resize(unsigned long) --> void", pybind11::arg("__new_size"));
-		cl.def("resize", (void (std::vector<EdgePoint>::*)(unsigned long, const struct EdgePoint &)) &std::vector<EdgePoint, std::allocator<EdgePoint> >::resize, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::resize(unsigned long, const struct EdgePoint &) --> void", pybind11::arg("__new_size"), pybind11::arg("__x"));
-		cl.def("shrink_to_fit", (void (std::vector<EdgePoint>::*)()) &std::vector<EdgePoint, std::allocator<EdgePoint> >::shrink_to_fit, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::shrink_to_fit() --> void");
-		cl.def("capacity", (unsigned long (std::vector<EdgePoint>::*)() const) &std::vector<EdgePoint, std::allocator<EdgePoint> >::capacity, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::capacity() const --> unsigned long");
-		cl.def("empty", (bool (std::vector<EdgePoint>::*)() const) &std::vector<EdgePoint, std::allocator<EdgePoint> >::empty, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::empty() const --> bool");
-		cl.def("reserve", (void (std::vector<EdgePoint>::*)(unsigned long)) &std::vector<EdgePoint, std::allocator<EdgePoint> >::reserve, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::reserve(unsigned long) --> void", pybind11::arg("__n"));
-		cl.def("__getitem__", (struct EdgePoint & (std::vector<EdgePoint>::*)(unsigned long)) &std::vector<EdgePoint, std::allocator<EdgePoint> >::operator[], "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::operator[](unsigned long) --> struct EdgePoint &", pybind11::return_value_policy::automatic, pybind11::arg("__n"));
-		cl.def("at", (struct EdgePoint & (std::vector<EdgePoint>::*)(unsigned long)) &std::vector<EdgePoint, std::allocator<EdgePoint> >::at, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::at(unsigned long) --> struct EdgePoint &", pybind11::return_value_policy::automatic, pybind11::arg("__n"));
-		cl.def("front", (struct EdgePoint & (std::vector<EdgePoint>::*)()) &std::vector<EdgePoint, std::allocator<EdgePoint> >::front, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::front() --> struct EdgePoint &", pybind11::return_value_policy::automatic);
-		cl.def("back", (struct EdgePoint & (std::vector<EdgePoint>::*)()) &std::vector<EdgePoint, std::allocator<EdgePoint> >::back, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::back() --> struct EdgePoint &", pybind11::return_value_policy::automatic);
-		cl.def("data", (struct EdgePoint * (std::vector<EdgePoint>::*)()) &std::vector<EdgePoint, std::allocator<EdgePoint> >::data, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::data() --> struct EdgePoint *", pybind11::return_value_policy::automatic);
-		cl.def("push_back", (void (std::vector<EdgePoint>::*)(const struct EdgePoint &)) &std::vector<EdgePoint, std::allocator<EdgePoint> >::push_back, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::push_back(const struct EdgePoint &) --> void", pybind11::arg("__x"));
-		cl.def("pop_back", (void (std::vector<EdgePoint>::*)()) &std::vector<EdgePoint, std::allocator<EdgePoint> >::pop_back, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::pop_back() --> void");
-		cl.def("insert", (class __gnu_cxx::__normal_iterator<struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > > (std::vector<EdgePoint>::*)(class __gnu_cxx::__normal_iterator<const struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >, const struct EdgePoint &)) &std::vector<EdgePoint, std::allocator<EdgePoint> >::insert, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::insert(class __gnu_cxx::__normal_iterator<const struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >, const struct EdgePoint &) --> class __gnu_cxx::__normal_iterator<struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >", pybind11::arg("__position"), pybind11::arg("__x"));
-		cl.def("insert", (class __gnu_cxx::__normal_iterator<struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > > (std::vector<EdgePoint>::*)(class __gnu_cxx::__normal_iterator<const struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >, class std::initializer_list<struct EdgePoint>)) &std::vector<EdgePoint, std::allocator<EdgePoint> >::insert, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::insert(class __gnu_cxx::__normal_iterator<const struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >, class std::initializer_list<struct EdgePoint>) --> class __gnu_cxx::__normal_iterator<struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >", pybind11::arg("__position"), pybind11::arg("__l"));
-		cl.def("insert", (class __gnu_cxx::__normal_iterator<struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > > (std::vector<EdgePoint>::*)(class __gnu_cxx::__normal_iterator<const struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >, unsigned long, const struct EdgePoint &)) &std::vector<EdgePoint, std::allocator<EdgePoint> >::insert, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::insert(class __gnu_cxx::__normal_iterator<const struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >, unsigned long, const struct EdgePoint &) --> class __gnu_cxx::__normal_iterator<struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >", pybind11::arg("__position"), pybind11::arg("__n"), pybind11::arg("__x"));
-		cl.def("erase", (class __gnu_cxx::__normal_iterator<struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > > (std::vector<EdgePoint>::*)(class __gnu_cxx::__normal_iterator<const struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >)) &std::vector<EdgePoint, std::allocator<EdgePoint> >::erase, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::erase(class __gnu_cxx::__normal_iterator<const struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >) --> class __gnu_cxx::__normal_iterator<struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >", pybind11::arg("__position"));
-		cl.def("erase", (class __gnu_cxx::__normal_iterator<struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > > (std::vector<EdgePoint>::*)(class __gnu_cxx::__normal_iterator<const struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >, class __gnu_cxx::__normal_iterator<const struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >)) &std::vector<EdgePoint, std::allocator<EdgePoint> >::erase, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::erase(class __gnu_cxx::__normal_iterator<const struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >, class __gnu_cxx::__normal_iterator<const struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >) --> class __gnu_cxx::__normal_iterator<struct EdgePoint *, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > >", pybind11::arg("__first"), pybind11::arg("__last"));
-		cl.def("swap", (void (std::vector<EdgePoint>::*)(class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > &)) &std::vector<EdgePoint, std::allocator<EdgePoint> >::swap, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::swap(class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > &) --> void", pybind11::arg("__x"));
-		cl.def("clear", (void (std::vector<EdgePoint>::*)()) &std::vector<EdgePoint, std::allocator<EdgePoint> >::clear, "C++: std::vector<EdgePoint, std::allocator<EdgePoint> >::clear() --> void");
-	}
 }
 
 
@@ -751,6 +674,7 @@ void bind_std_stl_vector_1(std::function< pybind11::module &(std::string const &
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <stl_binders.hpp>
 
 
 #ifndef BINDER_PYBIND11_TYPE_CASTER
@@ -814,8 +738,6 @@ void bind_std_stl_set(std::function< pybind11::module &(std::string const &names
 
 // File: Point3D.cpp
 #include <BaseModel.hpp> // CBaseModel
-#include <BaseModel.hpp> // CBaseModel::AddFace
-#include <BaseModel.hpp> // CBaseModel::AddVertex
 #include <BaseModel.hpp> // CBaseModel::AdjustScaleAndComputeNormalsToVerts
 #include <BaseModel.hpp> // CBaseModel::CBaseModel
 #include <BaseModel.hpp> // CBaseModel::Face
@@ -967,6 +889,7 @@ void bind_std_stl_set(std::function< pybind11::module &(std::string const &names
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <stl_binders.hpp>
 
 
 #ifndef BINDER_PYBIND11_TYPE_CASTER
@@ -1053,8 +976,6 @@ void bind_Point3D(std::function< pybind11::module &(std::string const &namespace
 		cl.def_readwrite("m_scale", &CBaseModel::m_scale);
 		cl.def_readwrite("m_fBeLoaded", &CBaseModel::m_fBeLoaded);
 		cl.def("LoadModel", (void (CBaseModel::*)(class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> >, class std::vector<struct CFace, class std::allocator<struct CFace> >)) &CBaseModel::LoadModel, "C++: CBaseModel::LoadModel(class std::vector<struct CPoint3D, class std::allocator<struct CPoint3D> >, class std::vector<struct CFace, class std::allocator<struct CFace> >) --> void", pybind11::arg("vertices"), pybind11::arg("faces"));
-		cl.def("AddVertex", (void (CBaseModel::*)(struct CPoint3D)) &CBaseModel::AddVertex, "C++: CBaseModel::AddVertex(struct CPoint3D) --> void", pybind11::arg("pt"));
-		cl.def("AddFace", (void (CBaseModel::*)(struct CFace)) &CBaseModel::AddFace, "C++: CBaseModel::AddFace(struct CFace) --> void", pybind11::arg("face"));
 		cl.def("Finalize", (void (CBaseModel::*)()) &CBaseModel::Finalize, "C++: CBaseModel::Finalize() --> void");
 		cl.def("isAValidModel", (bool (CBaseModel::*)()) &CBaseModel::isAValidModel, "C++: CBaseModel::isAValidModel() --> bool");
 		cl.def("AdjustScaleAndComputeNormalsToVerts", (void (CBaseModel::*)()) &CBaseModel::AdjustScaleAndComputeNormalsToVerts, "C++: CBaseModel::AdjustScaleAndComputeNormalsToVerts() --> void");
@@ -1159,6 +1080,18 @@ void bind_Point3D(std::function< pybind11::module &(std::string const &namespace
 #include <ExactMethodForDGP.hpp> // InfoAtVertex::operator=
 #include <ExactMethodForDGP.hpp> // QuoteInfoAtVertex
 #include <ExactMethodForDGP.hpp> // QuoteInfoAtVertex::QuoteInfoAtVertex
+#include <ExactMethodForDGP.hpp> // QuoteInfoAtVertex::operator=
+#include <ICHWithFurtherPriorityQueue.hpp> // CICHWithFurtherPriorityQueue
+#include <ICHWithFurtherPriorityQueue.hpp> // CICHWithFurtherPriorityQueue::AddIntoQueueOfPseudoSources
+#include <ICHWithFurtherPriorityQueue.hpp> // CICHWithFurtherPriorityQueue::AddIntoQueueOfWindows
+#include <ICHWithFurtherPriorityQueue.hpp> // CICHWithFurtherPriorityQueue::BuildSequenceTree
+#include <ICHWithFurtherPriorityQueue.hpp> // CICHWithFurtherPriorityQueue::CICHWithFurtherPriorityQueue
+#include <ICHWithFurtherPriorityQueue.hpp> // CICHWithFurtherPriorityQueue::ClearContainers
+#include <ICHWithFurtherPriorityQueue.hpp> // CICHWithFurtherPriorityQueue::InitContainers
+#include <ICHWithFurtherPriorityQueue.hpp> // CICHWithFurtherPriorityQueue::UpdateTreeDepthBackWithChoice
+#include <ImprovedCHWithEdgeValve.hpp> // CImprovedCHWithEdgeValve
+#include <ImprovedCHWithEdgeValve.hpp> // CImprovedCHWithEdgeValve::CImprovedCHWithEdgeValve
+#include <ImprovedCHWithEdgeValve.hpp> // CImprovedCHWithEdgeValve::CheckValidityOfWindow
 #include <Point3D.hpp> // CPoint3D
 #include <Point3D.hpp> // CPoint3D::CPoint3D
 #include <Point3D.hpp> // CPoint3D::Len
@@ -1170,6 +1103,24 @@ void bind_Point3D(std::function< pybind11::module &(std::string const &namespace
 #include <Point3D.hpp> // CPoint3D::operator/=
 #include <Point3D.hpp> // CPoint3D::operator=
 #include <Point3D.hpp> // CPoint3D::operator==
+#include <PreviousCH.hpp> // CPreviousCH
+#include <PreviousCH.hpp> // CPreviousCH::AddIntoQueueOfPseudoSources
+#include <PreviousCH.hpp> // CPreviousCH::AddIntoQueueOfWindows
+#include <PreviousCH.hpp> // CPreviousCH::BuildSequenceTree
+#include <PreviousCH.hpp> // CPreviousCH::CPreviousCH
+#include <PreviousCH.hpp> // CPreviousCH::CheckValidityOfWindow
+#include <PreviousCH.hpp> // CPreviousCH::ClearContainers
+#include <PreviousCH.hpp> // CPreviousCH::FillExperimentalResults
+#include <PreviousCH.hpp> // CPreviousCH::InitContainers
+#include <PreviousCH.hpp> // CPreviousCH::UpdateTreeDepthBackWithChoice
+#include <PreviousCH.hpp> // InfoAtAngle
+#include <PreviousCH.hpp> // InfoAtAngle::InfoAtAngle
+#include <PreviousCH.hpp> // InfoAtAngle::operator=
+#include <PreviousCH.hpp> // QuoteWindow
+#include <PreviousCH.hpp> // QuoteWindow::QuoteWindow
+#include <PreviousCH.hpp> // QuoteWindow::operator=
+#include <PreviousCH.hpp> // Window
+#include <PreviousCH.hpp> // Window::Window
 #include <RichModel.hpp> // CEdge
 #include <RichModel.hpp> // CRichModel
 #include <RichModel.hpp> // CRichModel::AngleSum
@@ -1309,6 +1260,7 @@ void bind_Point3D(std::function< pybind11::module &(std::string const &namespace
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <stl_binders.hpp>
 
 
 #ifndef BINDER_PYBIND11_TYPE_CASTER
@@ -1389,6 +1341,375 @@ struct PyCallBack_CExactMethodForDGP : public CExactMethodForDGP {
 	}
 };
 
+// CPreviousCH file:PreviousCH.hpp line:51
+struct PyCallBack_CPreviousCH : public CPreviousCH {
+	using CPreviousCH::CPreviousCH;
+
+	void InitContainers() override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CPreviousCH *>(this), "InitContainers");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>();
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CPreviousCH::InitContainers();
+	}
+	void ClearContainers() override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CPreviousCH *>(this), "ClearContainers");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>();
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CPreviousCH::ClearContainers();
+	}
+	void BuildSequenceTree() override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CPreviousCH *>(this), "BuildSequenceTree");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>();
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CPreviousCH::BuildSequenceTree();
+	}
+	void AddIntoQueueOfPseudoSources(struct QuoteInfoAtVertex a0) override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CPreviousCH *>(this), "AddIntoQueueOfPseudoSources");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>(a0);
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CPreviousCH::AddIntoQueueOfPseudoSources(a0);
+	}
+	void AddIntoQueueOfWindows(struct QuoteWindow & a0) override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CPreviousCH *>(this), "AddIntoQueueOfWindows");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>(a0);
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CPreviousCH::AddIntoQueueOfWindows(a0);
+	}
+	bool UpdateTreeDepthBackWithChoice() override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CPreviousCH *>(this), "UpdateTreeDepthBackWithChoice");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>();
+			if (pybind11::detail::cast_is_temporary_value_reference<bool>::value) {
+				static pybind11::detail::overload_caster_t<bool> caster;
+				return pybind11::detail::cast_ref<bool>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<bool>(std::move(o));
+		}
+		return CPreviousCH::UpdateTreeDepthBackWithChoice();
+	}
+	bool CheckValidityOfWindow(struct Window & a0) override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CPreviousCH *>(this), "CheckValidityOfWindow");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>(a0);
+			if (pybind11::detail::cast_is_temporary_value_reference<bool>::value) {
+				static pybind11::detail::overload_caster_t<bool> caster;
+				return pybind11::detail::cast_ref<bool>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<bool>(std::move(o));
+		}
+		return CPreviousCH::CheckValidityOfWindow(a0);
+	}
+	void FillExperimentalResults() override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CPreviousCH *>(this), "FillExperimentalResults");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>();
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CPreviousCH::FillExperimentalResults();
+	}
+	void Execute() override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CPreviousCH *>(this), "Execute");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>();
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CExactMethodForDGP::Execute();
+	}
+};
+
+// CImprovedCHWithEdgeValve file:ImprovedCHWithEdgeValve.hpp line:11
+struct PyCallBack_CImprovedCHWithEdgeValve : public CImprovedCHWithEdgeValve {
+	using CImprovedCHWithEdgeValve::CImprovedCHWithEdgeValve;
+
+	bool CheckValidityOfWindow(struct Window & a0) override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CImprovedCHWithEdgeValve *>(this), "CheckValidityOfWindow");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>(a0);
+			if (pybind11::detail::cast_is_temporary_value_reference<bool>::value) {
+				static pybind11::detail::overload_caster_t<bool> caster;
+				return pybind11::detail::cast_ref<bool>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<bool>(std::move(o));
+		}
+		return CImprovedCHWithEdgeValve::CheckValidityOfWindow(a0);
+	}
+	void InitContainers() override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CImprovedCHWithEdgeValve *>(this), "InitContainers");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>();
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CPreviousCH::InitContainers();
+	}
+	void ClearContainers() override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CImprovedCHWithEdgeValve *>(this), "ClearContainers");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>();
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CPreviousCH::ClearContainers();
+	}
+	void BuildSequenceTree() override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CImprovedCHWithEdgeValve *>(this), "BuildSequenceTree");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>();
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CPreviousCH::BuildSequenceTree();
+	}
+	void AddIntoQueueOfPseudoSources(struct QuoteInfoAtVertex a0) override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CImprovedCHWithEdgeValve *>(this), "AddIntoQueueOfPseudoSources");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>(a0);
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CPreviousCH::AddIntoQueueOfPseudoSources(a0);
+	}
+	void AddIntoQueueOfWindows(struct QuoteWindow & a0) override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CImprovedCHWithEdgeValve *>(this), "AddIntoQueueOfWindows");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>(a0);
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CPreviousCH::AddIntoQueueOfWindows(a0);
+	}
+	bool UpdateTreeDepthBackWithChoice() override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CImprovedCHWithEdgeValve *>(this), "UpdateTreeDepthBackWithChoice");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>();
+			if (pybind11::detail::cast_is_temporary_value_reference<bool>::value) {
+				static pybind11::detail::overload_caster_t<bool> caster;
+				return pybind11::detail::cast_ref<bool>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<bool>(std::move(o));
+		}
+		return CPreviousCH::UpdateTreeDepthBackWithChoice();
+	}
+	void FillExperimentalResults() override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CImprovedCHWithEdgeValve *>(this), "FillExperimentalResults");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>();
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CPreviousCH::FillExperimentalResults();
+	}
+	void Execute() override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CImprovedCHWithEdgeValve *>(this), "Execute");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>();
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CExactMethodForDGP::Execute();
+	}
+};
+
+// CICHWithFurtherPriorityQueue file:ICHWithFurtherPriorityQueue.hpp line:13
+struct PyCallBack_CICHWithFurtherPriorityQueue : public CICHWithFurtherPriorityQueue {
+	using CICHWithFurtherPriorityQueue::CICHWithFurtherPriorityQueue;
+
+	void AddIntoQueueOfPseudoSources(struct QuoteInfoAtVertex a0) override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CICHWithFurtherPriorityQueue *>(this), "AddIntoQueueOfPseudoSources");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>(a0);
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CICHWithFurtherPriorityQueue::AddIntoQueueOfPseudoSources(a0);
+	}
+	void AddIntoQueueOfWindows(struct QuoteWindow & a0) override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CICHWithFurtherPriorityQueue *>(this), "AddIntoQueueOfWindows");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>(a0);
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CICHWithFurtherPriorityQueue::AddIntoQueueOfWindows(a0);
+	}
+	bool UpdateTreeDepthBackWithChoice() override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CICHWithFurtherPriorityQueue *>(this), "UpdateTreeDepthBackWithChoice");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>();
+			if (pybind11::detail::cast_is_temporary_value_reference<bool>::value) {
+				static pybind11::detail::overload_caster_t<bool> caster;
+				return pybind11::detail::cast_ref<bool>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<bool>(std::move(o));
+		}
+		return CICHWithFurtherPriorityQueue::UpdateTreeDepthBackWithChoice();
+	}
+	void BuildSequenceTree() override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CICHWithFurtherPriorityQueue *>(this), "BuildSequenceTree");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>();
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CICHWithFurtherPriorityQueue::BuildSequenceTree();
+	}
+	void InitContainers() override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CICHWithFurtherPriorityQueue *>(this), "InitContainers");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>();
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CICHWithFurtherPriorityQueue::InitContainers();
+	}
+	void ClearContainers() override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CICHWithFurtherPriorityQueue *>(this), "ClearContainers");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>();
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CICHWithFurtherPriorityQueue::ClearContainers();
+	}
+	bool CheckValidityOfWindow(struct Window & a0) override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CICHWithFurtherPriorityQueue *>(this), "CheckValidityOfWindow");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>(a0);
+			if (pybind11::detail::cast_is_temporary_value_reference<bool>::value) {
+				static pybind11::detail::overload_caster_t<bool> caster;
+				return pybind11::detail::cast_ref<bool>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<bool>(std::move(o));
+		}
+		return CImprovedCHWithEdgeValve::CheckValidityOfWindow(a0);
+	}
+	void FillExperimentalResults() override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CICHWithFurtherPriorityQueue *>(this), "FillExperimentalResults");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>();
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CPreviousCH::FillExperimentalResults();
+	}
+	void Execute() override { 
+		pybind11::gil_scoped_acquire gil;
+		pybind11::function overload = pybind11::get_overload(static_cast<const CICHWithFurtherPriorityQueue *>(this), "Execute");
+		if (overload) {
+			auto o = overload.operator()<pybind11::return_value_policy::reference>();
+			if (pybind11::detail::cast_is_temporary_value_reference<void>::value) {
+				static pybind11::detail::overload_caster_t<void> caster;
+				return pybind11::detail::cast_ref<void>(std::move(o), caster);
+			}
+			else return pybind11::detail::cast_safe<void>(std::move(o));
+		}
+		return CExactMethodForDGP::Execute();
+	}
+};
+
 void bind_RichModel(std::function< pybind11::module &(std::string const &namespace_) > &M)
 {
 	{ // EdgePoint file:RichModel.hpp line:321
@@ -1436,9 +1757,12 @@ void bind_RichModel(std::function< pybind11::module &(std::string const &namespa
 
 		cl.def(pybind11::init<char, int, double>(), pybind11::arg("birthTime"), pybind11::arg("indexOfVert"), pybind11::arg("disUptodate"));
 
+		cl.def(pybind11::init<const struct QuoteInfoAtVertex &>(), pybind11::arg(""));
+
 		cl.def_readwrite("birthTime", &QuoteInfoAtVertex::birthTime);
 		cl.def_readwrite("indexOfVert", &QuoteInfoAtVertex::indexOfVert);
 		cl.def_readwrite("disUptodate", &QuoteInfoAtVertex::disUptodate);
+		cl.def("assign", (struct QuoteInfoAtVertex & (QuoteInfoAtVertex::*)(const struct QuoteInfoAtVertex &)) &QuoteInfoAtVertex::operator=, "C++: QuoteInfoAtVertex::operator=(const struct QuoteInfoAtVertex &) --> struct QuoteInfoAtVertex &", pybind11::return_value_policy::automatic, pybind11::arg(""));
 	}
 	{ // CExactMethodForDGP file:ExactMethodForDGP.hpp line:48
 		pybind11::class_<CExactMethodForDGP, std::shared_ptr<CExactMethodForDGP>, PyCallBack_CExactMethodForDGP> cl(M(""), "CExactMethodForDGP", "");
@@ -1449,7 +1773,7 @@ void bind_RichModel(std::function< pybind11::module &(std::string const &namespa
 		cl.def(pybind11::init<PyCallBack_CExactMethodForDGP const &>());
 		cl.def_readwrite("m_InfoAtVertices", &CExactMethodForDGP::m_InfoAtVertices);
 		cl.def("GetRootSourceOfVert", (int (CExactMethodForDGP::*)(int) const) &CExactMethodForDGP::GetRootSourceOfVert, "C++: CExactMethodForDGP::GetRootSourceOfVert(int) const --> int", pybind11::arg("index"));
-		cl.def("FindSourceVertex", (int (CExactMethodForDGP::*)(int, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > &) const) &CExactMethodForDGP::FindSourceVertex, "C++: CExactMethodForDGP::FindSourceVertex(int, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > &) const --> int", pybind11::arg("indexOfVert"), pybind11::arg("resultingPath"));
+		cl.def("FindSourceVertex", (class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > & (CExactMethodForDGP::*)(int, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > &) const) &CExactMethodForDGP::FindSourceVertex, "C++: CExactMethodForDGP::FindSourceVertex(int, class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > &) const --> class std::vector<struct EdgePoint, class std::allocator<struct EdgePoint> > &", pybind11::return_value_policy::automatic, pybind11::arg("indexOfVert"), pybind11::arg("resultingPath"));
 		cl.def("PickShortestPaths", (void (CExactMethodForDGP::*)(int)) &CExactMethodForDGP::PickShortestPaths, "C++: CExactMethodForDGP::PickShortestPaths(int) --> void", pybind11::arg("num"));
 		cl.def("Execute", (void (CExactMethodForDGP::*)()) &CExactMethodForDGP::Execute, "C++: CExactMethodForDGP::Execute() --> void");
 		cl.def("InitContainers", (void (CExactMethodForDGP::*)()) &CExactMethodForDGP::InitContainers, "C++: CExactMethodForDGP::InitContainers() --> void");
@@ -1468,6 +1792,75 @@ void bind_RichModel(std::function< pybind11::module &(std::string const &namespa
 	// GetTickCount() file:ExactMethodForDGP.hpp line:425
 	M("").def("GetTickCount", (int (*)()) &GetTickCount, "C++: GetTickCount() --> int");
 
+	{ // InfoAtAngle file:PreviousCH.hpp line:13
+		pybind11::class_<InfoAtAngle, std::shared_ptr<InfoAtAngle>> cl(M(""), "InfoAtAngle", "");
+		pybind11::handle cl_type = cl;
+
+		cl.def(pybind11::init<>());
+
+		cl.def(pybind11::init<const struct InfoAtAngle &>(), pybind11::arg(""));
+
+		cl.def_readwrite("birthTime", &InfoAtAngle::birthTime);
+		cl.def_readwrite("disUptodate", &InfoAtAngle::disUptodate);
+		cl.def_readwrite("entryProp", &InfoAtAngle::entryProp);
+		cl.def("assign", (struct InfoAtAngle & (InfoAtAngle::*)(const struct InfoAtAngle &)) &InfoAtAngle::operator=, "C++: InfoAtAngle::operator=(const struct InfoAtAngle &) --> struct InfoAtAngle &", pybind11::return_value_policy::automatic, pybind11::arg(""));
+	}
+	{ // Window file:PreviousCH.hpp line:24
+		pybind11::class_<Window, std::shared_ptr<Window>> cl(M(""), "Window", "");
+		pybind11::handle cl_type = cl;
+
+		cl.def(pybind11::init<>());
+
+		cl.def(pybind11::init<const struct Window &>(), pybind11::arg(""));
+
+		cl.def_readwrite("fIsOnLeftSubtree", &Window::fIsOnLeftSubtree);
+		cl.def_readwrite("fParentIsPseudoSource", &Window::fParentIsPseudoSource);
+		cl.def_readwrite("fDirectParentEdgeOnLeft", &Window::fDirectParentEdgeOnLeft);
+		cl.def_readwrite("fDirectParenIsPseudoSource", &Window::fDirectParenIsPseudoSource);
+		cl.def_readwrite("birthTimeOfParent", &Window::birthTimeOfParent);
+		cl.def_readwrite("indexOfParent", &Window::indexOfParent);
+		cl.def_readwrite("indexOfRoot", &Window::indexOfRoot);
+		cl.def_readwrite("indexOfCurEdge", &Window::indexOfCurEdge);
+		cl.def_readwrite("level", &Window::level);
+		cl.def_readwrite("disToRoot", &Window::disToRoot);
+		cl.def_readwrite("entryPropOfParent", &Window::entryPropOfParent);
+		cl.def_readwrite("coordOfPseudoSource", &Window::coordOfPseudoSource);
+	}
+	{ // QuoteWindow file:PreviousCH.hpp line:40
+		pybind11::class_<QuoteWindow, std::shared_ptr<QuoteWindow>> cl(M(""), "QuoteWindow", "");
+		pybind11::handle cl_type = cl;
+
+		cl.def(pybind11::init<>());
+
+		cl.def(pybind11::init<const struct QuoteWindow &>(), pybind11::arg(""));
+
+		cl.def_readwrite("disUptodate", &QuoteWindow::disUptodate);
+		cl.def("assign", (struct QuoteWindow & (QuoteWindow::*)(const struct QuoteWindow &)) &QuoteWindow::operator=, "C++: QuoteWindow::operator=(const struct QuoteWindow &) --> struct QuoteWindow &", pybind11::return_value_policy::automatic, pybind11::arg(""));
+	}
+	{ // CPreviousCH file:PreviousCH.hpp line:51
+		pybind11::class_<CPreviousCH, std::shared_ptr<CPreviousCH>, PyCallBack_CPreviousCH, CExactMethodForDGP> cl(M(""), "CPreviousCH", "");
+		pybind11::handle cl_type = cl;
+
+		cl.def(pybind11::init<const class CRichModel &, const class std::set<int, struct std::less<int>, class std::allocator<int> > &>(), pybind11::arg("inputModel"), pybind11::arg("indexOfSourceVerts"));
+
+		cl.def(pybind11::init<PyCallBack_CPreviousCH const &>());
+	}
+	{ // CImprovedCHWithEdgeValve file:ImprovedCHWithEdgeValve.hpp line:11
+		pybind11::class_<CImprovedCHWithEdgeValve, std::shared_ptr<CImprovedCHWithEdgeValve>, PyCallBack_CImprovedCHWithEdgeValve, CPreviousCH> cl(M(""), "CImprovedCHWithEdgeValve", "");
+		pybind11::handle cl_type = cl;
+
+		cl.def(pybind11::init<const class CRichModel &, const class std::set<int, struct std::less<int>, class std::allocator<int> > &>(), pybind11::arg("inputModel"), pybind11::arg("indexOfSourceVerts"));
+
+		cl.def(pybind11::init<PyCallBack_CImprovedCHWithEdgeValve const &>());
+	}
+	{ // CICHWithFurtherPriorityQueue file:ICHWithFurtherPriorityQueue.hpp line:13
+		pybind11::class_<CICHWithFurtherPriorityQueue, std::shared_ptr<CICHWithFurtherPriorityQueue>, PyCallBack_CICHWithFurtherPriorityQueue, CImprovedCHWithEdgeValve> cl(M(""), "CICHWithFurtherPriorityQueue", "");
+		pybind11::handle cl_type = cl;
+
+		cl.def(pybind11::init<const class CRichModel &, const class std::set<int, struct std::less<int>, class std::allocator<int> > &>(), pybind11::arg("inputModel"), pybind11::arg("indexOfSourceVerts"));
+
+		cl.def(pybind11::init<PyCallBack_CICHWithFurtherPriorityQueue const &>());
+	}
 }
 
 
@@ -1481,7 +1874,6 @@ void bind_RichModel(std::function< pybind11::module &(std::string const &namespa
 typedef std::function< pybind11::module & (std::string const &) > ModuleGetter;
 
 void bind_std_stl_vector(std::function< pybind11::module &(std::string const &namespace_) > &M);
-void bind_std_stl_vector_1(std::function< pybind11::module &(std::string const &namespace_) > &M);
 void bind_std_stl_set(std::function< pybind11::module &(std::string const &namespace_) > &M);
 void bind_Point3D(std::function< pybind11::module &(std::string const &namespace_) > &M);
 void bind_RichModel(std::function< pybind11::module &(std::string const &namespace_) > &M);
@@ -1505,7 +1897,6 @@ PYBIND11_PLUGIN(chenhancc) {
 	//pybind11::class_<std::shared_ptr<void>>(M(""), "_encapsulated_data_");
 
 	bind_std_stl_vector(M);
-	bind_std_stl_vector_1(M);
 	bind_std_stl_set(M);
 	bind_Point3D(M);
 	bind_RichModel(M);
@@ -1516,7 +1907,6 @@ PYBIND11_PLUGIN(chenhancc) {
 // Source list file: /home/ashok/eclipse-workspace/chenhancc/autobinding_build/chenhancc.sources
 // chenhancc.cpp
 // std/stl_vector.cpp
-// std/stl_vector_1.cpp
 // std/stl_set.cpp
 // Point3D.cpp
 // RichModel.cpp

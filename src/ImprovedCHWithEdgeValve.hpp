@@ -1,11 +1,29 @@
-// ImprovedCHWithEdgeValve.cpp: implementation of the CImprovedCHWithEdgeValve class.
+// ImprovedCHWithEdgeValve.h: interface for the CImprovedCHWithEdgeValve class.
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "stdafx.h"
-#include "ImprovedCHWithEdgeValve.h"
 
+#pragma once
+#include "stdafx.hpp"
+#include "PreviousCH.hpp"
 using namespace std;
+
+class CImprovedCHWithEdgeValve : public CPreviousCH 
+{
+protected:
+	virtual bool CheckValidityOfWindow(Window& w);
+public:
+    CImprovedCHWithEdgeValve(const CRichModel& inputModel, const std::set<int> &indexOfSourceVerts);
+	virtual ~CImprovedCHWithEdgeValve();
+};
+
+
+
+
+
+// ImprovedCHWithEdgeValve.cpp: implementation of the CImprovedCHWithEdgeValve class.
+//
+//////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
@@ -24,7 +42,7 @@ bool CImprovedCHWithEdgeValve::CheckValidityOfWindow(Window& w)
 {
 	if (w.fDirectParenIsPseudoSource)
 		return true;
-	const CRichModel::CEdge& edge = model.Edge(w.indexOfCurEdge);
+	const CEdge& edge = model.Edge(w.indexOfCurEdge);
 	//TRACE
 	//out << setw(10) << setiosflags(ios_base::fixed) << min(10000, m_InfoAtVertices[edge.indexOfLeftVert].disUptodate) << "\t";
 	//out << setw(10) << setiosflags(ios_base::fixed) << min(10000, m_InfoAtVertices[edge.indexOfRightVert].disUptodate) << "\t";
@@ -46,10 +64,10 @@ bool CImprovedCHWithEdgeValve::CheckValidityOfWindow(Window& w)
 	{
 		return false;
 	}
-	const CRichModel::CEdge& oppositeEdge = model.Edge(edge.indexOfReverseEdge);
+	const CEdge& oppositeEdge = model.Edge(edge.indexOfReverseEdge);
 	double xOfVert = edge.length - oppositeEdge.coordOfOppositeVert.first;
 	double yOfVert = -oppositeEdge.coordOfOppositeVert.second;
-	if (m_InfoAtVertices[oppositeEdge.indexOfOppositeVert].disUptodate < 10000  / model.m_scale)	
+	if (m_InfoAtVertices[oppositeEdge.indexOfOppositeVert].disUptodate < 10000  / model.m_scale)
 	{
 		if (w.fDirectParentEdgeOnLeft)
 		{
@@ -68,7 +86,7 @@ bool CImprovedCHWithEdgeValve::CheckValidityOfWindow(Window& w)
 			detaX = xOfVert - w.proportions[1] * edge.length;
 			if (detaX * detaX + yOfVert * yOfVert < deta * deta)
 				return false;
-		}	
+		}
 	}
 	return true;
 }

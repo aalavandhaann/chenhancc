@@ -40,8 +40,6 @@ class CBaseModel
 public:
 	CBaseModel();
 	void LoadModel(std::vector<CPoint3D> vertices, std::vector<CFace> faces);
-	void AddVertex(CPoint3D pt);
-	void AddFace(CFace face);
 	void Finalize();
 	bool isAValidModel();
 	void AdjustScaleAndComputeNormalsToVerts();
@@ -106,21 +104,14 @@ void CBaseModel::LoadModel(std::vector<CPoint3D> vertices, std::vector<CFace> fa
 {
 	m_fBeLoaded = false;
 
-	std::cout << "SIZE OF INPUT VERTICES : "<<(int) vertices.size() << "\n";
-
 	for(CPoint3D p3d : vertices)
 	{
 		CPoint3D pt;
 		pt.x = p3d.x;
 		pt.y = p3d.y;
 		pt.z = p3d.z;
-		//std::cout << p3d.x << ", "<< p3d.y<< ", "<<p3d.z << "\n";
 		m_Verts.push_back(pt);
 	}
-
-	std::cout << "SIZE OF SAVED VERTICES : "<<(int) m_Verts.size() << "\n";
-
-	std::cout << "NOW READING FACES FROM THE INPUT ::: " << (int) faces.size() << "\n";
 
 	for (CFace face : faces)
 	{
@@ -129,22 +120,11 @@ void CBaseModel::LoadModel(std::vector<CPoint3D> vertices, std::vector<CFace> fa
 		m_Faces.push_back(newface);
 	}
 
-	std::cout << "NOW READING SAVED FACES SIZE ::: " << (int) m_Faces.size() << "\n";
-
 	m_fBeLoaded = true;
 	if(isAValidModel())
 	{
 		AdjustScaleAndComputeNormalsToVerts();
 	}
-}
-
-void CBaseModel::AddVertex(CPoint3D pt)
-{
-	m_Verts.push_back(pt);
-}
-void CBaseModel::AddFace(CFace face)
-{
-	m_Faces.push_back(face);
 }
 
 void CBaseModel::Finalize()

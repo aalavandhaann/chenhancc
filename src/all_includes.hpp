@@ -3,7 +3,9 @@
 #include <BaseModel.hpp>
 #include <RichModel.hpp>
 #include <ExactMethodForDGP.hpp>
-
+#include <PreviousCH.hpp>
+#include <ImprovedCHWithEdgeValve.hpp>
+#include <ICHWithFurtherPriorityQueue.hpp>
 /**
 contents of X.hpp
 -----------------

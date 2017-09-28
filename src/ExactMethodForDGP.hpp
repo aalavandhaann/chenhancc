@@ -75,7 +75,7 @@ public:
     CExactMethodForDGP(const CRichModel& inputModel, const std::set<int> &indexOfSourceVerts);
 	virtual ~CExactMethodForDGP();
 	inline int GetRootSourceOfVert(int index) const;
-    int FindSourceVertex(int indexOfVert, std::vector<EdgePoint>& resultingPath) const;
+	vector<EdgePoint>& FindSourceVertex(int indexOfVert, std::vector<EdgePoint>& resultingPath) const;
 	void PickShortestPaths(int num);
 	virtual void Execute();
 	virtual void InitContainers() = 0;
@@ -348,14 +348,14 @@ void CExactMethodForDGP::BackTraceWithoutStoring(int indexOfVert) const
 	CPoint3D pt = model.ComputeShiftPoint(indexOfSourceVert);
 }
 
-int CExactMethodForDGP::FindSourceVertex(int indexOfVert, vector<EdgePoint>& resultingPath) const
+vector<EdgePoint>& CExactMethodForDGP::FindSourceVertex(int indexOfVert, vector<EdgePoint>& resultingPath) const
 {
 	resultingPath.clear();
 
 	if (m_InfoAtVertices[indexOfVert].birthTime == -1 || m_InfoAtVertices[indexOfVert].disUptodate > FLT_MAX)
 	{
 		assert(model.GetNumOfComponents() != 1 || model.Neigh(indexOfVert).empty());
-		return -1;
+		return resultingPath;
 	}
 	vector<int> vertexNodes;
 	int index = indexOfVert;
@@ -419,7 +419,7 @@ int CExactMethodForDGP::FindSourceVertex(int indexOfVert, vector<EdgePoint>& res
 		};
 	}
 	resultingPath.push_back(EdgePoint(indexOfSourceVert));
-	return indexOfSourceVert;
+	return resultingPath;
 }
 
 int GetTickCount()

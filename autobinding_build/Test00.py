@@ -12,5 +12,5 @@ print('TESTING RICH MODEL');
 
 rmodel = CRichModel();
 rmodel.LoadModel(verts, faces);
-print('END OF MOVIE')
-#print(rmodel.GetNumOfVerts(), rmodel.GetNumOfFaces());
+print(rmodel.GetNumOfVerts(), rmodel.GetNumOfFaces());
+print('END OF MOVIE');

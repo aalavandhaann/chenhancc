@@ -3,47 +3,53 @@
 //////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "ExactMethodForDGP.h"
+#include "stdafx.hpp"
+#include "ExactMethodForDGP.hpp"
+
+
+using namespace std;
+
+
+struct InfoAtAngle
+{
+	char birthTime;
+	double disUptodate;
+	double entryProp;
+	InfoAtAngle()
+	{
+		birthTime = -1;
+		disUptodate = DBL_MAX;
+	}
+};
+struct Window
+{
+	bool fIsOnLeftSubtree;
+	bool fParentIsPseudoSource;
+	bool fDirectParentEdgeOnLeft; //may removed
+	bool fDirectParenIsPseudoSource; //may removed
+	char birthTimeOfParent;
+	int indexOfParent;
+	int indexOfRoot;
+	int indexOfCurEdge;
+	int level;//may removed
+	double disToRoot;
+	double proportions[2];
+	double entryPropOfParent;
+	std::pair<double, double> coordOfPseudoSource;
+};//at least 64 bytes.
+struct QuoteWindow
+{
+	Window* pWindow;
+	double disUptodate;
+	bool operator<(const QuoteWindow& another) const
+	{
+		return disUptodate > another.disUptodate;
+	}
+};
+
 
 class CPreviousCH : public CExactMethodForDGP
 {
-protected:
-	struct InfoAtAngle
-	{
-		char birthTime;
-		double disUptodate;
-		double entryProp;
-		InfoAtAngle()
-		{
-			birthTime = -1;
-			disUptodate = DBL_MAX;
-		}
-	};
-	struct Window
-	{
-		bool fIsOnLeftSubtree;
-		bool fParentIsPseudoSource;	
-		bool fDirectParentEdgeOnLeft; //may removed
-		bool fDirectParenIsPseudoSource; //may removed
-		char birthTimeOfParent;
-		int indexOfParent;
-		int indexOfRoot;
-		int indexOfCurEdge;
-		int level;//may removed
-		double disToRoot;
-		double proportions[2];
-		double entryPropOfParent;
-        std::pair<double, double> coordOfPseudoSource;
-	};//at least 64 bytes.
-	struct QuoteWindow
-	{
-		Window* pWindow;
-		double disUptodate;
-		bool operator<(const QuoteWindow& another) const
-		{
-			return disUptodate > another.disUptodate;
-		}
-	};
 protected:	
     std::queue<QuoteWindow> m_QueueForWindows;
     std::queue<QuoteInfoAtVertex> m_QueueForPseudoSources;
@@ -208,7 +214,7 @@ void CPreviousCH::ComputeChildrenOfPseudoSourceFromWindow(int indexOfParentVerte
 void CPreviousCH::ComputeChildrenOfWindow(QuoteWindow& quoteParentWindow)
 {
 	const Window& w = *quoteParentWindow.pWindow;
-	const CRichModel::CEdge& edge = model.Edge(w.indexOfCurEdge);
+	const CEdge& edge = model.Edge(w.indexOfCurEdge);
 	double entryProp = model.ProportionOnEdgeByImage(w.indexOfCurEdge, w.coordOfPseudoSource);	
 	if (entryProp >= w.proportions[1])
 	{
@@ -293,7 +299,7 @@ void CPreviousCH::CreateIntervalChildOfPseudoSource(int source, int subIndexOfIn
 	int indexOfIncidentEdge = model.Neigh(source)[subIndexOfIncidentEdge].first;
 	if (model.IsExtremeEdge(indexOfIncidentEdge))
 		return;
-	const CRichModel::CEdge& edge = model.Edge(indexOfIncidentEdge);
+	const CEdge& edge = model.Edge(indexOfIncidentEdge);
 	int edgeIndex = edge.indexOfRightEdge;
 	if (model.IsExtremeEdge(edgeIndex))
 		return;
@@ -311,7 +317,7 @@ void CPreviousCH::CreateIntervalChildOfPseudoSource(int source, int subIndexOfIn
 	quoteW.pWindow->disToRoot = m_InfoAtVertices[source].disUptodate;
 	quoteW.pWindow->proportions[0] = 0;
 	quoteW.pWindow->proportions[1] = 1;
-	quoteW.pWindow->entryPropOfParent;
+	//quoteW.pWindow->entryPropOfParent;
 	int reverseEdge = model.Edge(edgeIndex).indexOfReverseEdge;
 	quoteW.pWindow->coordOfPseudoSource = model.GetNew2DCoordinatesByReversingCurrentEdge(reverseEdge,
 		model.Edge(reverseEdge).coordOfOppositeVert);
@@ -320,7 +326,7 @@ void CPreviousCH::CreateIntervalChildOfPseudoSource(int source, int subIndexOfIn
 
 void CPreviousCH::FillVertChildOfPseudoSource(int source, int subIndexOfVert)
 {
-	const CRichModel::CEdge& edge = model.Edge(model.Neigh(source)[subIndexOfVert].first);
+	const CEdge& edge = model.Edge(model.Neigh(source)[subIndexOfVert].first);
 	int index = edge.indexOfRightVert;		
 	double dis = m_InfoAtVertices[source].disUptodate + edge.length;
 	if (dis >= m_InfoAtVertices[index].disUptodate - LENGTH_EPSILON_CONTROL)
@@ -552,4 +558,194 @@ void CPreviousCH::ComputeRightTrimmedChildWithParent(const Window& w)
 	quoteW.pWindow->entryPropOfParent = m_InfoAtAngles[w.indexOfCurEdge].entryProp;
 	AddIntoQueueOfWindows(quoteW);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// PreviousCH.cpp: implementation of the CPreviousCH class.
+//
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+CPreviousCH::CPreviousCH(const CRichModel& inputModel, const set<int> &indexOfSourceVerts) : CExactMethodForDGP(inputModel, indexOfSourceVerts)
+{
+	nameOfAlgorithm = "CH";
+}
+
+CPreviousCH::~CPreviousCH()
+{
+}
+
+void CPreviousCH::InitContainers()
+{
+	m_InfoAtAngles.resize(model.GetNumOfEdges());
+	memory += double(model.GetNumOfEdges()) * sizeof(InfoAtAngle) / 1024 / 1024;
+}
+
+void CPreviousCH::BuildSequenceTree()
+{
+	ComputeChildrenOfSource();
+	bool fFromQueueOfPseudoSources = UpdateTreeDepthBackWithChoice();
+	while (depthOfResultingTree < model.GetNumOfFaces() && !(m_QueueForPseudoSources.empty() && m_QueueForWindows.empty()))
+	{
+		if ((int)m_QueueForWindows.size() > nMaxLenOfWindowQueue)
+			nMaxLenOfWindowQueue = (int)m_QueueForWindows.size();
+		if (m_QueueForPseudoSources.size() > nMaxLenOfPseudoSources)
+			nMaxLenOfPseudoSources = (int)m_QueueForPseudoSources.size();
+		if (fFromQueueOfPseudoSources) //pseudosource
+		{
+			int indexOfVert = m_QueueForPseudoSources.front().indexOfVert;
+			m_QueueForPseudoSources.pop();
+			ComputeChildrenOfPseudoSource(indexOfVert);
+		}
+		else
+		{
+			QuoteWindow quoteW = m_QueueForWindows.front();
+			m_QueueForWindows.pop();
+			ComputeChildrenOfWindow(quoteW);
+			delete quoteW.pWindow;
+		}
+		fFromQueueOfPseudoSources = UpdateTreeDepthBackWithChoice();
+	}
+}
+
+void CPreviousCH::FillExperimentalResults()
+{
+	NPE = 1;
+	//memory += double(nMaxLenOfPseudoSources) * sizeof(QuoteInfoAtVertex) / 1024 / 1024;
+	//memory += double(nMaxLenOfWindowQueue) * (sizeof(QuoteWindow) + 64) / 1024 / 1024;
+}
+
+void CPreviousCH::ClearContainers()
+{
+	while (!m_QueueForWindows.empty())
+	{
+		delete m_QueueForWindows.front().pWindow;
+		m_QueueForWindows.pop();
+	}
+
+	while (!m_QueueForPseudoSources.empty())
+	{
+		m_QueueForPseudoSources.pop();
+	}
+}
+
+
+void CPreviousCH::AddIntoQueueOfPseudoSources(QuoteInfoAtVertex quoteOfPseudoSource)
+{
+	m_QueueForPseudoSources.push(quoteOfPseudoSource);
+}
+
+void CPreviousCH::AddIntoQueueOfWindows(QuoteWindow& quoteW)
+{
+	m_QueueForWindows.push(quoteW);
+	++nCountOfWindows;
+}
+
+bool CPreviousCH::UpdateTreeDepthBackWithChoice()
+{
+	while (!m_QueueForPseudoSources.empty()
+		&& m_QueueForPseudoSources.front().birthTime != m_InfoAtVertices[m_QueueForPseudoSources.front().indexOfVert].birthTime)
+		m_QueueForPseudoSources.pop();
+
+	while (!m_QueueForWindows.empty())
+	{
+		const QuoteWindow& quoteW = m_QueueForWindows.front();
+		if (quoteW.pWindow->fParentIsPseudoSource)
+		{
+			if (quoteW.pWindow->birthTimeOfParent !=
+				m_InfoAtVertices[quoteW.pWindow->indexOfParent].birthTime)
+			{
+				delete quoteW.pWindow;
+				m_QueueForWindows.pop();
+			}
+			else
+				break;
+		}
+		else
+		{
+			if (quoteW.pWindow->birthTimeOfParent ==
+				m_InfoAtAngles[quoteW.pWindow->indexOfParent].birthTime)
+				break;
+			else if (quoteW.pWindow->fIsOnLeftSubtree ==
+				(quoteW.pWindow->entryPropOfParent < m_InfoAtAngles[quoteW.pWindow->indexOfParent].entryProp))
+				break;
+			else
+			{
+				delete quoteW.pWindow;
+				m_QueueForWindows.pop();
+			}
+		}
+	}
+
+	bool fFromQueueOfPseudoSources(false);
+	if (m_QueueForWindows.empty())
+	{
+		if (!m_QueueForPseudoSources.empty())
+		{
+			const InfoAtVertex& infoOfHeadElemOfPseudoSources = m_InfoAtVertices[m_QueueForPseudoSources.front().indexOfVert];
+			depthOfResultingTree = max(depthOfResultingTree,
+				infoOfHeadElemOfPseudoSources.level);
+			fFromQueueOfPseudoSources = true;
+		}
+	}
+	else
+	{
+		if (m_QueueForPseudoSources.empty())
+		{
+			const Window& infoOfHeadElemOfWindows = *m_QueueForWindows.front().pWindow;
+			depthOfResultingTree = max(depthOfResultingTree,
+				infoOfHeadElemOfWindows.level);
+			fFromQueueOfPseudoSources = false;
+		}
+		else
+		{
+			const InfoAtVertex& infoOfHeadElemOfPseudoSources = m_InfoAtVertices[m_QueueForPseudoSources.front().indexOfVert];
+			const Window& infoOfHeadElemOfWindows = *m_QueueForWindows.front().pWindow;
+			if (infoOfHeadElemOfPseudoSources.level <=
+				infoOfHeadElemOfWindows.level)
+			{
+				depthOfResultingTree = max(depthOfResultingTree,
+					infoOfHeadElemOfPseudoSources.level);
+				fFromQueueOfPseudoSources = true;
+			}
+			else
+			{
+				depthOfResultingTree = max(depthOfResultingTree,
+					infoOfHeadElemOfWindows.level);
+				fFromQueueOfPseudoSources = false;
+			}
+		}
+	}
+	return fFromQueueOfPseudoSources;
+}
+
+bool CPreviousCH::CheckValidityOfWindow(Window& w)
+{
+	return true;
+}
+
+
 
