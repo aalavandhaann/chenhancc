@@ -3,7 +3,12 @@ chenhancc
 
 A Fast geodesic algorithm in python that spans across the surface through the polygons
 
-![Alt text](images/Dog.png =100x20)
+<p>
+	<img src="./images/Dog.png" width="300"><img src="./images/Cat.png" width="347">
+</p>
+<p>
+	<img src="./images/Man.png" height="300">
+</p>
 
 Installation
 ------------
