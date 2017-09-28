@@ -7,9 +7,9 @@ Installation
 ------------
 
 **Prerequesties**
-- This code is compiled using the magic binders for pybind11 created by binder 
-	-[Github link for binder](https://github.com/RosettaCommons/binder)
-	-[Github link for binder](https://github.com/pybind/pybind11) 
+- This code is compiled using the magic binders for pybind11 created by binder.
+	-[Github link for binder](https://github.com/RosettaCommons/binder).
+	-[Github link for binder](https://github.com/pybind/pybind11).
 
 
 **On any OS (Linux, OS X, MAC, Windows)**
