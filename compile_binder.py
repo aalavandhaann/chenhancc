@@ -72,8 +72,8 @@ def compile_tasks():
                                     "clang++","-O3 -shared -std=c++11",
                                     "-I"+PYBIND11_INCLUDES,"-I"+PYTHON_INCLUDES,"-I"+PROJECT_SOURCE_FILES,
                                     "-I"+BINDER_REPO_PATH, "-I"+BINDER_REPO_PATH+"/source",ROOT_MODULE+".cpp","-o",ROOT_MODULE+".so", "-fPIC",
-                                    "&", "rm", PROJECT_BASE+ROOT_MODULE+".so", 
-                                    "&", "cp",PREFIX_PATH+ROOT_MODULE+".so", PROJECT_BASE+ROOT_MODULE+".so"];
+                                    "&", "rm", "~/.local/lib/python3.5/site-packages/"+ROOT_MODULE+".so", 
+                                    "&", "cp",PREFIX_PATH+ROOT_MODULE+".so", "~/.local/lib/python3.5/site-packages/"+ROOT_MODULE+".so"];
             print(" ".join(build_library_command));
             p = subprocess.Popen(" ".join(build_library_command), shell = True, cwd=PREFIX_PATH);
             return_code = p.wait();
