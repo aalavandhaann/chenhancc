@@ -1,0 +1,8 @@
++include <pybind11/stl.h>
++include <stl_binders.hpp>
+
+#-function CRichModel::CreateEdgesFromVertsAndFaces
+
+
++binder std::vector binder::vector_binder
+#+default_pointer_return_value_policy
