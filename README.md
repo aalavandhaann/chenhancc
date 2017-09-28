@@ -6,10 +6,17 @@ An example project built with [pybind11](https://github.com/pybind/pybind11).
 Installation
 ------------
 
+**Prerequesties**
+ - This code is compiled using the magic binders for pybind11 created by binder 
+ ..*[Github link for binder](https://github.com/RosettaCommons/binder)
+ ..*[Github link for binder](https://github.com/RosettaCommons/binder) 
+
+
 **On Unix (Linux, OS X)**
 
  - clone this repository
- - `pip install ./python_example`
+ - set the variables inside `compile_binder.py`
+ - run `python3 compile_binder.py`
 
 **On Windows (Requires Visual Studio 2015)**
 
