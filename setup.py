@@ -1,7 +1,7 @@
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 import sys
-import setuptools
+import setup2
 
 __version__ = '0.0.1'
 
@@ -21,15 +21,16 @@ class get_pybind_include(object):
         print('PYBIND LOCATION ::: ', pybind11.get_include(self.user)   );
         return pybind11.get_include(self.user);
 
+#Path the include files of PYBIND11 (version == 1.1.9)
+PYBIND11_INCLUDES="/home/ashok/libraries/PyBinder/binder-master/build/pybind11/include"
 
 ext_modules = [
     Extension(
         'chenhancc',
-        ['src/Point3D.cpp','src/BaseModel.cpp','src/bindings.cpp'],
+        ['src/chenhancc.cpp'],
         include_dirs=[
             # Path to pybind11 headers
-            get_pybind_include(),
-            get_pybind_include(user=True)
+            PYBIND11_INCLUDES
         ],
         language='c++'
     ),
@@ -47,7 +48,7 @@ def has_flag(compiler, flagname):
         f.write('int main (int argc, char **argv) { return 0; }')
         try:
             compiler.compile([f.name], extra_postargs=[flagname])
-        except setuptools.distutils.errors.CompileError:
+        except setup2.distutils.errors.CompileError:
             return False
     return True
 
@@ -99,7 +100,7 @@ setup(
     description='A test project using pybind11',
     long_description='',
     ext_modules=ext_modules,
-    install_requires=['pybind11>=2.2'],
+    install_requires=['pybind11>=1.7'],
     cmdclass={'build_ext': BuildExt},
     zip_safe=False,
 )
