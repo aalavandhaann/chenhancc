@@ -1,4 +1,4 @@
-from distutils.sysconfig import get_python_inc, get_python_lib;
+from configurations import BINDER_EXECUTABLE, ROOT_MODULE, PREFIX_PATH, ALL_INCLUDES, PROJECT_BASE, PROJECT_SOURCE_FILES, PROJECT_SOURCE_FILES, PROJECT_CONFIG_BINDER, BINDER_REPO_PATH, PYBIND11_INCLUDES, PYTHON_INCLUDES, CLANG_EXECUTABLE;
 import subprocess, argparse;
 from direct.directscripts.gendocs import generate
 
@@ -24,27 +24,7 @@ def test_library():
     
     print('END OF MOVIE')
 
-#Path where the exe or the bin file of binder can be found
-BINDER_EXECUTABLE="binder"
-#Name of the project or the namespace that will be used in python to import
-ROOT_MODULE="chenhancc"
-#Path where the build files are stored
-PREFIX_PATH="/home/ashok/eclipse-workspace/chenhancc/autobinding_build/"
-#The single include file containing the include directive for all the source files used in the project
-ALL_INCLUDES="/home/ashok/eclipse-workspace/chenhancc/src/all_includes.hpp"
-#Location of the project folder
-PROJECT_BASE="/home/ashok/eclipse-workspace/chenhancc/" 
-#Where are the project source files? (hpp files)
-PROJECT_SOURCE_FILES="/home/ashok/eclipse-workspace/chenhancc/src/"
-#What are your configuration values to be passed to binder when compiling? Location of that file please
-PROJECT_CONFIG_BINDER="/home/ashok/eclipse-workspace/chenhancc/config"
 
-#Path to the BINDER REPOSITORY
-BINDER_REPO_PATH="/home/ashok/libraries/PyBinder/binder-master/"
-#Path the include files of PYBIND11 (version == 1.1.9)
-PYBIND11_INCLUDES="/home/ashok/libraries/PyBinder/binder-master/build/pybind11/include"
-#Path to Python includes 
-PYTHON_INCLUDES=get_python_inc();
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-g", action='store_true', help="Generate pybind binding cpp files");
@@ -69,7 +49,7 @@ def compile_tasks():
         return_code = p.wait();
         if(args.b):
             build_library_command = ["cp", PREFIX_PATH+"/"+ROOT_MODULE+".cpp",PROJECT_SOURCE_FILES+"/"+ROOT_MODULE+".cpp","&",
-                                    "clang++","-O3 -shared -std=c++11",
+                                    CLANG_EXECUTABLE,"-O3 -shared -std=c++11",
                                     "-I"+PYBIND11_INCLUDES,"-I"+PYTHON_INCLUDES,"-I"+PROJECT_SOURCE_FILES,
                                     "-I"+BINDER_REPO_PATH, "-I"+BINDER_REPO_PATH+"/source",ROOT_MODULE+".cpp","-o",ROOT_MODULE+".so", "-fPIC",
                                     "&", "rm", "~/.local/lib/python3.5/site-packages/"+ROOT_MODULE+".so", 
