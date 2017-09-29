@@ -6,6 +6,14 @@ A Fast geodesic algorithm in python that spans across the surface through the po
 <p>
 	<img src="./images/Dog.png" height="200"><img src="./images/Cat.png" height="200"><img src="./images/Man.png" height="200">
 </p>
+<p>
+The algorithm is purely based on the paper of Shiqing who provided me with this wonderful c++ code as well. All I had to do was make some changes so it can be compiled as a python library. The timing or efficiency difference between the pure python implementation and c++ -> python conversion is atleast 210x times. 
+</>
+
+```
+Xin SQ, Wang GJ. Improving Chen and Han's algorithm on the discrete geodesic problem. ACM Transactions on Graphics (TOG). 2009 Aug 1;28(4):104.
+```
+
 
 Installation
 ------------
@@ -41,15 +49,24 @@ Demos
 
 If you want to perform demos as shown in the screenshots above. Then after installing the sharedobject for chenhancc you should be also install another Blender plugin to see live paths on meshes. The link to the repository is [here](https://github.com/aalavandhaann/ch_bl_geodesics). Once you have installed the plugin then start clicking on the meshes and see paths between consecutive clicks. 
 
-Demos - Simple
----------------
+
+Demos - Blender
+-------------------
 
 You will find <b>blender</b> folder inside the <b>demo</b> folder. There is a blend file that can test a mesh loaded in the scene. Just ensure to load a mesh, select it with mouse and run the script `(Alt-p)`. You should see a path between the selected vertices as supplied in the code in the text editor of Blender. In the below code change the `svid` and `evid` to change the vertex selection. `svid` is the seed vertex index, and `evid` is the target vertex index to which a path should be found. 
 
 ```
+#Replace the below Blender api imports with the framework of your choice. 
+#The idea is to supply points, and face information for mesh representation
+#inside the geodesics algorithm
+
+#----------Blender based api modules import----------------
 import bpy, bmesh;
-from chenhancc import CBaseModel as BaseModel, CRichModel as RichModel, CPoint3D as Point3D, CFace as Face, CICHWithFurtherPriorityQueue as ICHWithFurtherPriorityQueue;
 from mathutils import Vector;
+#----------End of Blender based api modules import----------------
+
+from chenhancc import CBaseModel as BaseModel, CRichModel as RichModel, CPoint3D as Point3D, CFace as Face, CICHWithFurtherPriorityQueue as ICHWithFurtherPriorityQueue;
+
 
 c = bpy.context;
 m = c.active_object;
