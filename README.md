@@ -3,6 +3,10 @@ chenhancc
 
 A Fast geodesic algorithm in python that spans across the surface through the polygons
 
+<p>
+	<img src="./images/Dog.png" height="200"><img src="./images/Cat.png" height="200"><img src="./images/Man.png" height="200">
+</p>
+
 Installation
 ------------
 
@@ -34,6 +38,12 @@ I haven't thought about it yet. The world is so strange that even free stuffs co
 
 Demos
 ---------
+
+If you want to perform demos as shown in the screenshots above. Then after installing the sharedobject for chenhancc you should be also install another Blender plugin to see live paths on meshes. The link to the repository is [here](https://github.com/aalavandhaann/ch_bl_geodesics). Once you have installed the plugin then start clicking on the meshes and see paths between consecutive clicks. 
+
+Demos - Simple
+---------------
+
 You will find <b>blender</b> folder inside the <b>demo</b> folder. There is a blend file that can test a mesh loaded in the scene. Just ensure to load a mesh, select it with mouse and run the script `(Alt-p)`. You should see a path between the selected vertices as supplied in the code in the text editor of Blender. In the below code change the `svid` and `evid` to change the vertex selection. `svid` is the seed vertex index, and `evid` is the target vertex index to which a path should be found. 
 
 ```
