@@ -1,4 +1,5 @@
 from configurations import BINDER_EXECUTABLE, ROOT_MODULE, PREFIX_PATH, ALL_INCLUDES, PROJECT_BASE, PROJECT_SOURCE_FILES, PROJECT_SOURCE_FILES, PROJECT_CONFIG_BINDER, BINDER_REPO_PATH, PYBIND11_INCLUDES, PYTHON_INCLUDES, CLANG_EXECUTABLE;
+import os;
 import subprocess, argparse;
 from direct.directscripts.gendocs import generate
 
@@ -48,20 +49,28 @@ def compile_tasks():
         p = subprocess.Popen(" ".join(generate_command), shell = True);
         return_code = p.wait();
         
-        if(args.b):
+        if(args.b and os.path.isfile(PREFIX_PATH+ROOT_MODULE+".cpp")):
             print('COMPILE AS SHARED LIBRARY FOR PYTHON');
             build_library_command = ["cp", PREFIX_PATH+"/"+ROOT_MODULE+".cpp",PROJECT_SOURCE_FILES+"/"+ROOT_MODULE+".cpp","&",
                                     CLANG_EXECUTABLE,"-O3 -shared -std=c++11",
                                     "-I"+PYBIND11_INCLUDES,"-I"+PYTHON_INCLUDES,"-I"+PROJECT_SOURCE_FILES,
-                                    "-I"+BINDER_REPO_PATH, "-I"+BINDER_REPO_PATH+"/source",ROOT_MODULE+".cpp","-o",ROOT_MODULE+".so", "-fPIC",
-                                    "&", "rm", "~/.local/lib/python3.5/site-packages/"+ROOT_MODULE+".so", 
-                                    "&", "cp",PREFIX_PATH+ROOT_MODULE+".so", "~/.local/lib/python3.5/site-packages/"+ROOT_MODULE+".so"];
-            print(" ".join(build_library_command));
+                                    "-I"+BINDER_REPO_PATH, "-I"+BINDER_REPO_PATH+"/source",ROOT_MODULE+".cpp","-o",ROOT_MODULE+".so", "-fPIC"];
+            
             p = subprocess.Popen(" ".join(build_library_command), shell = True, cwd=PREFIX_PATH);
             return_code = p.wait();
-    
+            if(os.path.isfile(PREFIX_PATH+ROOT_MODULE+".so")):               
+                print('FINISHED TASK FOR PYTHON LIBRARY BUILDING');
+            else:
+                print('ERROR GENERATING SHARED OBJECT FOR PYTHON. CHECK OUTPUT OF COMMAND ', build_library_command);            
+            
+            add_to_user_library = ["rm", "~/.local/lib/python3.5/site-packages/"+ROOT_MODULE+".so", "&", "cp",PREFIX_PATH+ROOT_MODULE+".so", "~/.local/lib/python3.5/site-packages/"+ROOT_MODULE+".so"];
+        else:
+            print('GENERATED FILE NOT FOUND. CHECK FOR ANY ERRORS IN BINDING');
+            
     if(args.t):
         print('TESTING THE SHARED OBJECT WITH TEST00.py');
+        import sys
+        sys.path.insert(0, PREFIX_PATH);
         test_library();
 
 

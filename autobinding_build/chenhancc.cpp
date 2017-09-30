@@ -1,12 +1,10 @@
 // File: std/stl_vector.cpp
 #include <BaseModel.hpp> // CFace
 #include <BaseModel.hpp> // CFace::CFace
-#include <BaseModel.hpp> // CFace::operator=
 #include <BaseModel.hpp> // CFace::operator[]
 #include <BaseModel.hpp> // CFace::setIndices
 #include <ExactMethodForDGP.hpp> // InfoAtVertex
 #include <ExactMethodForDGP.hpp> // InfoAtVertex::InfoAtVertex
-#include <ExactMethodForDGP.hpp> // InfoAtVertex::operator=
 #include <ExactMethodForDGP.hpp> // QuoteInfoAtVertex
 #include <ExactMethodForDGP.hpp> // QuoteInfoAtVertex::QuoteInfoAtVertex
 #include <ExactMethodForDGP.hpp> // QuoteInfoAtVertex::operator=
@@ -23,18 +21,15 @@
 #include <Point3D.hpp> // CPoint3D::operator==
 #include <PreviousCH.hpp> // InfoAtAngle
 #include <PreviousCH.hpp> // InfoAtAngle::InfoAtAngle
-#include <PreviousCH.hpp> // InfoAtAngle::operator=
 #include <PreviousCH.hpp> // QuoteWindow
 #include <PreviousCH.hpp> // QuoteWindow::QuoteWindow
 #include <PreviousCH.hpp> // QuoteWindow::operator=
 #include <RichModel.hpp> // CEdge
 #include <RichModel.hpp> // CEdge::CEdge
-#include <RichModel.hpp> // CEdge::operator=
 #include <RichModel.hpp> // CRichModel
 #include <RichModel.hpp> // EdgePoint
 #include <RichModel.hpp> // EdgePoint::EdgePoint
 #include <RichModel.hpp> // EdgePoint::Get3DPoint
-#include <RichModel.hpp> // EdgePoint::operator=
 #include <initializer_list> // std::initializer_list
 #include <initializer_list> // std::initializer_list<CEdge>::begin
 #include <initializer_list> // std::initializer_list<CEdge>::end
@@ -178,35 +173,35 @@
 #include <iterator> // std::reverse_iterator<std::_Bit_iterator>::reverse_iterator
 #include <list> // std::_List_const_iterator
 #include <list> // std::_List_iterator
-#include <list> // std::__cxx11::list
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::assign
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::back
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::begin
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::cbegin
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::cend
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::clear
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::empty
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::end
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::erase
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::front
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::get_allocator
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::insert
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::list
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::max_size
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::merge
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::operator=
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::pop_back
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::pop_front
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::push_back
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::push_front
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::remove
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::resize
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::reverse
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::size
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::sort
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::splice
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::swap
-#include <list> // std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >::unique
+#include <list> // std::list
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::assign
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::back
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::begin
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::cbegin
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::cend
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::clear
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::empty
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::end
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::erase
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::front
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::get_allocator
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::insert
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::list
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::max_size
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::merge
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::operator=
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::pop_back
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::pop_front
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::push_back
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::push_front
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::remove
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::resize
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::reverse
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::size
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::sort
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::splice
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::swap
+#include <list> // std::list<CPoint3D, std::allocator<CPoint3D> >::unique
 #include <memory> // std::allocator
 #include <memory> // std::allocator<CEdge>::allocator
 #include <memory> // std::allocator<CEdge>::operator=
@@ -227,8 +222,8 @@
 #include <memory> // std::allocator<bool>::allocator
 #include <memory> // std::allocator<int>::allocator
 #include <memory> // std::allocator<int>::operator=
-#include <memory> // std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > >::allocator
-#include <memory> // std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > >::operator=
+#include <memory> // std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > >::allocator
+#include <memory> // std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > >::operator=
 #include <memory> // std::allocator<std::pair<int, double> >::allocator
 #include <memory> // std::allocator<std::pair<int, double> >::operator=
 #include <memory> // std::allocator<std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > > >::allocator
@@ -238,7 +233,6 @@
 #include <utility> // std::pair<int, double>::pair
 #include <vector> // std::_Bit_const_iterator
 #include <vector> // std::_Bit_const_iterator::_Bit_const_iterator
-#include <vector> // std::_Bit_const_iterator::_M_const_cast
 #include <vector> // std::_Bit_const_iterator::operator*
 #include <vector> // std::_Bit_const_iterator::operator+
 #include <vector> // std::_Bit_const_iterator::operator++
@@ -249,7 +243,6 @@
 #include <vector> // std::_Bit_const_iterator::operator[]
 #include <vector> // std::_Bit_iterator
 #include <vector> // std::_Bit_iterator::_Bit_iterator
-#include <vector> // std::_Bit_iterator::_M_const_cast
 #include <vector> // std::_Bit_iterator::operator*
 #include <vector> // std::_Bit_iterator::operator+
 #include <vector> // std::_Bit_iterator::operator++
@@ -521,31 +514,31 @@
 #include <vector> // std::vector<int, std::allocator<int> >::size
 #include <vector> // std::vector<int, std::allocator<int> >::swap
 #include <vector> // std::vector<int, std::allocator<int> >::vector
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::assign
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::at
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::back
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::begin
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::capacity
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::cbegin
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::cend
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::clear
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::data
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::empty
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::end
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::erase
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::front
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::insert
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::max_size
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::operator=
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::operator[]
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::pop_back
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::push_back
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::reserve
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::resize
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::shrink_to_fit
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::size
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::swap
-#include <vector> // std::vector<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::__cxx11::list<CPoint3D, std::allocator<CPoint3D> > > >::vector
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::assign
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::at
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::back
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::begin
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::capacity
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::cbegin
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::cend
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::clear
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::data
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::empty
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::end
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::erase
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::front
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::insert
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::max_size
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::operator=
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::operator[]
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::pop_back
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::push_back
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::reserve
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::resize
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::shrink_to_fit
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::size
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::swap
+#include <vector> // std::vector<std::list<CPoint3D, std::allocator<CPoint3D> >, std::allocator<std::list<CPoint3D, std::allocator<CPoint3D> > > >::vector
 #include <vector> // std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::assign
 #include <vector> // std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::at
 #include <vector> // std::vector<std::pair<int, double>, std::allocator<std::pair<int, double> > >::back
@@ -609,16 +602,16 @@
 
 void bind_std_stl_vector(std::function< pybind11::module &(std::string const &namespace_) > &M)
 {
-	// std::vector file:bits/stl_vector.h line:214
+	// std::vector file:bits/stl_vector.h line:210
 	binder::vector_binder<CPoint3D,std::allocator<CPoint3D>>(M("std"), "CPoint3D", "std_allocator_CPoint3D_t");
 
-	// std::vector file:bits/stl_vector.h line:214
+	// std::vector file:bits/stl_vector.h line:210
 	binder::vector_binder<CFace,std::allocator<CFace>>(M("std"), "CFace", "std_allocator_CFace_t");
 
-	// std::vector file:bits/stl_vector.h line:214
+	// std::vector file:bits/stl_vector.h line:210
 	binder::vector_binder<std::pair<int, double>,std::allocator<std::pair<int, double> >>(M("std"), "std_pair_int_double_t", "std_allocator_std_pair_int_double_t");
 
-	// std::vector file:bits/stl_vector.h line:214
+	// std::vector file:bits/stl_vector.h line:210
 	binder::vector_binder<EdgePoint,std::allocator<EdgePoint>>(M("std"), "EdgePoint", "std_allocator_EdgePoint_t");
 
 }
@@ -701,12 +694,6 @@ void bind_std_stl_set(std::function< pybind11::module &(std::string const &names
 		cl.def("__init__", [](std::set<int> *self_, class std::initializer_list<int>  const &a0, const struct std::less<int> & a1) { new (self_) std::set<int>(a0, a1); }, "doc");
 		cl.def(pybind11::init<class std::initializer_list<int>, const struct std::less<int> &, const class std::allocator<int> &>(), pybind11::arg("__l"), pybind11::arg("__comp"), pybind11::arg("__a"));
 
-		cl.def(pybind11::init<const class std::allocator<int> &>(), pybind11::arg("__a"));
-
-		cl.def(pybind11::init<const class std::set<int, struct std::less<int>, class std::allocator<int> > &, const class std::allocator<int> &>(), pybind11::arg("__x"), pybind11::arg("__a"));
-
-		cl.def(pybind11::init<class std::initializer_list<int>, const class std::allocator<int> &>(), pybind11::arg("__l"), pybind11::arg("__a"));
-
 		cl.def("assign", (class std::set<int, struct std::less<int>, class std::allocator<int> > & (std::set<int>::*)(const class std::set<int, struct std::less<int>, class std::allocator<int> > &)) &std::set<int, std::less<int>, std::allocator<int> >::operator=, "C++: std::set<int, std::less<int>, std::allocator<int> >::operator=(const class std::set<int, struct std::less<int>, class std::allocator<int> > &) --> class std::set<int, struct std::less<int>, class std::allocator<int> > &", pybind11::return_value_policy::automatic, pybind11::arg("__x"));
 		cl.def("assign", (class std::set<int, struct std::less<int>, class std::allocator<int> > & (std::set<int>::*)(class std::initializer_list<int>)) &std::set<int, std::less<int>, std::allocator<int> >::operator=, "C++: std::set<int, std::less<int>, std::allocator<int> >::operator=(class std::initializer_list<int>) --> class std::set<int, struct std::less<int>, class std::allocator<int> > &", pybind11::return_value_policy::automatic, pybind11::arg("__l"));
 		cl.def("key_comp", (struct std::less<int> (std::set<int>::*)() const) &std::set<int, std::less<int>, std::allocator<int> >::key_comp, "C++: std::set<int, std::less<int>, std::allocator<int> >::key_comp() const --> struct std::less<int>");
@@ -751,7 +738,6 @@ void bind_std_stl_set(std::function< pybind11::module &(std::string const &names
 #include <BaseModel.hpp> // CBaseModel::operator=
 #include <BaseModel.hpp> // CFace
 #include <BaseModel.hpp> // CFace::CFace
-#include <BaseModel.hpp> // CFace::operator=
 #include <BaseModel.hpp> // CFace::operator[]
 #include <BaseModel.hpp> // CFace::setIndices
 #include <Point3D.hpp> // AngleBetween
@@ -771,7 +757,6 @@ void bind_std_stl_set(std::function< pybind11::module &(std::string const &names
 #include <Point3D.hpp> // VectorDot
 #include <RichModel.hpp> // CEdge
 #include <RichModel.hpp> // CEdge::CEdge
-#include <RichModel.hpp> // CEdge::operator=
 #include <RichModel.hpp> // CRichModel
 #include <RichModel.hpp> // CRichModel::AngleSum
 #include <RichModel.hpp> // CRichModel::CRichModel
@@ -957,7 +942,6 @@ void bind_Point3D(std::function< pybind11::module &(std::string const &namespace
 
 		cl.def("setIndices", (void (CFace::*)(int, int, int)) &CFace::setIndices, "C++: CFace::setIndices(int, int, int) --> void", pybind11::arg("x"), pybind11::arg("y"), pybind11::arg("z"));
 		cl.def("__getitem__", (int & (CFace::*)(int)) &CFace::operator[], "C++: CFace::operator[](int) --> int &", pybind11::return_value_policy::automatic, pybind11::arg("index"));
-		cl.def("assign", (struct CFace & (CFace::*)(const struct CFace &)) &CFace::operator=, "C++: CFace::operator=(const struct CFace &) --> struct CFace &", pybind11::return_value_policy::automatic, pybind11::arg(""));
 	}
 	{ // CBaseModel file:BaseModel.hpp line:38
 		pybind11::class_<CBaseModel, std::shared_ptr<CBaseModel>> cl(M(""), "CBaseModel", "");
@@ -1005,7 +989,6 @@ void bind_Point3D(std::function< pybind11::module &(std::string const &namespace
 		cl.def_readwrite("coordOfOppositeVert", &CEdge::coordOfOppositeVert);
 		cl.def_readwrite("matrixRotatedToLeftEdge", &CEdge::matrixRotatedToLeftEdge);
 		cl.def_readwrite("matrixRotatedToRightEdge", &CEdge::matrixRotatedToRightEdge);
-		cl.def("assign", (struct CEdge & (CEdge::*)(const struct CEdge &)) &CEdge::operator=, "C++: CEdge::operator=(const struct CEdge &) --> struct CEdge &", pybind11::return_value_policy::automatic, pybind11::arg(""));
 	}
 	{ // CRichModel file:RichModel.hpp line:37
 		pybind11::class_<CRichModel, std::shared_ptr<CRichModel>, CBaseModel> cl(M(""), "CRichModel", "");
@@ -1076,7 +1059,6 @@ void bind_Point3D(std::function< pybind11::module &(std::string const &namespace
 #include <ExactMethodForDGP.hpp> // GetTickCount
 #include <ExactMethodForDGP.hpp> // InfoAtVertex
 #include <ExactMethodForDGP.hpp> // InfoAtVertex::InfoAtVertex
-#include <ExactMethodForDGP.hpp> // InfoAtVertex::operator=
 #include <ExactMethodForDGP.hpp> // QuoteInfoAtVertex
 #include <ExactMethodForDGP.hpp> // QuoteInfoAtVertex::QuoteInfoAtVertex
 #include <ExactMethodForDGP.hpp> // QuoteInfoAtVertex::operator=
@@ -1114,7 +1096,6 @@ void bind_Point3D(std::function< pybind11::module &(std::string const &namespace
 #include <PreviousCH.hpp> // CPreviousCH::UpdateTreeDepthBackWithChoice
 #include <PreviousCH.hpp> // InfoAtAngle
 #include <PreviousCH.hpp> // InfoAtAngle::InfoAtAngle
-#include <PreviousCH.hpp> // InfoAtAngle::operator=
 #include <PreviousCH.hpp> // QuoteWindow
 #include <PreviousCH.hpp> // QuoteWindow::QuoteWindow
 #include <PreviousCH.hpp> // QuoteWindow::operator=
@@ -1158,7 +1139,6 @@ void bind_Point3D(std::function< pybind11::module &(std::string const &namespace
 #include <RichModel.hpp> // EdgePoint
 #include <RichModel.hpp> // EdgePoint::EdgePoint
 #include <RichModel.hpp> // EdgePoint::Get3DPoint
-#include <RichModel.hpp> // EdgePoint::operator=
 #include <functional> // std::less
 #include <initializer_list> // std::initializer_list
 #include <iterator> // __gnu_cxx::__normal_iterator
@@ -1187,47 +1167,47 @@ void bind_Point3D(std::function< pybind11::module &(std::string const &namespace
 #include <set> // std::set<int, std::less<int>, std::allocator<int> >::upper_bound
 #include <set> // std::set<int, std::less<int>, std::allocator<int> >::value_comp
 #include <sstream> // __str__
-#include <string> // std::__cxx11::basic_string
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::append
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::assign
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::at
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::back
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::begin
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::c_str
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::capacity
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::cbegin
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::cend
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::clear
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::compare
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::copy
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::data
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::empty
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::end
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::erase
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::find
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::find_first_not_of
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::find_first_of
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::find_last_not_of
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::find_last_of
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::front
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::get_allocator
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::insert
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::length
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::max_size
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::operator+=
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::operator=
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::operator[]
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::pop_back
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::push_back
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::replace
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::reserve
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::resize
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::rfind
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::shrink_to_fit
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::size
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::substr
-#include <string> // std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::swap
+#include <string> // std::basic_string
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::append
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::assign
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::at
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::back
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::begin
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::c_str
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::capacity
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::cbegin
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::cend
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::clear
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::compare
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::copy
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::data
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::empty
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::end
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::erase
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::find
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::find_first_not_of
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::find_first_of
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::find_last_not_of
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::find_last_of
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::front
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::get_allocator
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::insert
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::length
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::max_size
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::operator+=
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::operator=
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::operator[]
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::pop_back
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::push_back
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::replace
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::reserve
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::resize
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::rfind
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::shrink_to_fit
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::size
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::substr
+#include <string> // std::basic_string<char, std::char_traits<char>, std::allocator<char> >::swap
 #include <string> // std::char_traits
 #include <utility> // std::pair
 #include <vector> // std::vector
@@ -1729,7 +1709,6 @@ void bind_RichModel(std::function< pybind11::module &(std::string const &namespa
 		cl.def_readwrite("proportion", &EdgePoint::proportion);
 		cl.def_readwrite("isVertex", &EdgePoint::isVertex);
 		cl.def("Get3DPoint", (struct CPoint3D (EdgePoint::*)(const class CRichModel &)) &EdgePoint::Get3DPoint, "C++: EdgePoint::Get3DPoint(const class CRichModel &) --> struct CPoint3D", pybind11::arg("model"));
-		cl.def("assign", (struct EdgePoint & (EdgePoint::*)(const struct EdgePoint &)) &EdgePoint::operator=, "C++: EdgePoint::operator=(const struct EdgePoint &) --> struct EdgePoint &", pybind11::return_value_policy::automatic, pybind11::arg(""));
 	}
 	{ // InfoAtVertex file:ExactMethodForDGP.hpp line:12
 		pybind11::class_<InfoAtVertex, std::shared_ptr<InfoAtVertex>> cl(M(""), "InfoAtVertex", "");
@@ -1746,7 +1725,6 @@ void bind_RichModel(std::function< pybind11::module &(std::string const &namespa
 		cl.def_readwrite("level", &InfoAtVertex::level);
 		cl.def_readwrite("disUptodate", &InfoAtVertex::disUptodate);
 		cl.def_readwrite("entryProp", &InfoAtVertex::entryProp);
-		cl.def("assign", (struct InfoAtVertex & (InfoAtVertex::*)(const struct InfoAtVertex &)) &InfoAtVertex::operator=, "C++: InfoAtVertex::operator=(const struct InfoAtVertex &) --> struct InfoAtVertex &", pybind11::return_value_policy::automatic, pybind11::arg(""));
 	}
 	{ // QuoteInfoAtVertex file:ExactMethodForDGP.hpp line:28
 		pybind11::class_<QuoteInfoAtVertex, std::shared_ptr<QuoteInfoAtVertex>> cl(M(""), "QuoteInfoAtVertex", "");
@@ -1802,7 +1780,6 @@ void bind_RichModel(std::function< pybind11::module &(std::string const &namespa
 		cl.def_readwrite("birthTime", &InfoAtAngle::birthTime);
 		cl.def_readwrite("disUptodate", &InfoAtAngle::disUptodate);
 		cl.def_readwrite("entryProp", &InfoAtAngle::entryProp);
-		cl.def("assign", (struct InfoAtAngle & (InfoAtAngle::*)(const struct InfoAtAngle &)) &InfoAtAngle::operator=, "C++: InfoAtAngle::operator=(const struct InfoAtAngle &) --> struct InfoAtAngle &", pybind11::return_value_policy::automatic, pybind11::arg(""));
 	}
 	{ // Window file:PreviousCH.hpp line:24
 		pybind11::class_<Window, std::shared_ptr<Window>> cl(M(""), "Window", "");
