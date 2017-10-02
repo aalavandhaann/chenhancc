@@ -24,13 +24,16 @@ Installation
 ------------
 
 **Python Package Manager (PIP)**
-```pip install chenhancc --user``` 
+
+```pip install chenhancc --user```
 
 **Easy Install**
+
 ```easy_install --prefix $HOME/.local``` This is for ubuntu 
 
 
 **Prerequesties**
+
 - This code is compiled using the magic binders for pybind11 created by binder.
 
 	*[Github link for binder](https://github.com/RosettaCommons/binder).
