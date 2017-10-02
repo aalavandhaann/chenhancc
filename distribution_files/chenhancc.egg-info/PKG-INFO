@@ -1,4 +1,4 @@
-Metadata-Version: 1.0
+Metadata-Version: 1.2
 Name: chenhancc
 Version: 0.0.1
 Summary: A geodesic path solution using chenhan
@@ -6,6 +6,7 @@ Home-page: https://github.com/aalavandhaann/chenhancc
 Author: #0K Srinivasan Ramachandran
 Author-email: ashok.srinivasan2002@gmail.com
 License: LICENSE.txt
+Description-Content-Type: UNKNOWN
 Description: Chenhancc
         ==============
         
@@ -67,7 +68,7 @@ Description: Chenhancc
         ---------------------------
         A simple test using Blender
         ---------------------------
-        
+        .. code:: python
         	#----------Blender based api modules import----------------
         	import bpy, bmesh;
         	from mathutils import Vector;
@@ -176,3 +177,4 @@ Description: Chenhancc
         
 Keywords: geodesic mesh mesh3d opengl pygl triangle triangular meshes blender
 Platform: UNKNOWN
+Requires-Python: >=3

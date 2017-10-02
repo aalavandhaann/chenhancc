@@ -23,6 +23,13 @@ Xin SQ, Wang GJ. Improving Chen and Han's algorithm on the discrete geodesic pro
 Installation
 ------------
 
+**Python Package Manager (PIP)**
+```pip install chenhancc --user``` 
+
+**Easy Install**
+```easy_install --prefix $HOME/.local``` This is for ubuntu 
+
+
 **Prerequesties**
 - This code is compiled using the magic binders for pybind11 created by binder.
 
@@ -42,7 +49,7 @@ Installation
  	- `-t`: Test a short snippet of code to ensure if the library works
  - To install the python library copy the generated chenhann.so (inside autobinding_build) to any locations as:
  	- site-packages of blender
- 	- Or use it with any of your person python projects
+ 	- Or use it with any of your personal python projects
 
 License
 -------
@@ -151,8 +158,3 @@ if(m):
     createPathMesh(path_verts);
     print('DONE FOUND THE PATHS::: ');
 ```
-
-TO-DO
------
-
-I am trying to distribute this as a `pip` package. But my knowledge about pybind11 and binder is limited. Hence no idea of how to distribute as a setup.py project. If you have any ideas, then I am all ears.

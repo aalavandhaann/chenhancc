@@ -59,7 +59,7 @@ You will find <b>blender</b> folder inside the <b>demo</b> folder. There is a bl
 ---------------------------
 A simple test using Blender
 ---------------------------
-
+.. code:: python
 	#----------Blender based api modules import----------------
 	import bpy, bmesh;
 	from mathutils import Vector;
