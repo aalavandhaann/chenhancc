@@ -7,13 +7,18 @@ A Fast geodesic algorithm in python that spans across the surface through the po
 	<img src="./images/Dog.png" height="200"><img src="./images/Cat.png" height="200"><img src="./images/Man.png" height="200">
 </p>
 <p>
+
+Many Thanks
+-----------
+
+The original c++ source code was provided to me by Dr. Xin Shiqing (https://sites.google.com/site/xinshiqing/). My sincere thanks to him for his help
+
 The algorithm is purely based on the paper of Shiqing who provided me with this wonderful c++ code as well. All I had to do was make some changes so it can be compiled as a python library. The timing or efficiency difference between the pure python implementation and c++ -> python conversion is atleast 210x times. 
 </>
 
 ```
 Xin SQ, Wang GJ. Improving Chen and Han's algorithm on the discrete geodesic problem. ACM Transactions on Graphics (TOG). 2009 Aug 1;28(4):104.
 ```
-
 
 Installation
 ------------
