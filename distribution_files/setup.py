@@ -2,8 +2,8 @@ from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 import sys
 
-__version__ = '0.0.1'
-
+__version__ = '0.0.3'
+__pybind_version__ = '2.0.0';
 
 class get_pybind_include(object):
     """Helper class to determine the pybind11 include path
@@ -16,7 +16,13 @@ class get_pybind_include(object):
         self.user = user
 
     def __str__(self):
-        return "./includes/pybind11/include/";
+        try:
+            import pybind11;
+            print('PYBIND11 INCLUDES ::: ', pybind11.get_include(self.user));
+            return pybind11.get_include(self.user);
+        except ImportError:
+            return "./chenhancc/includes/pybind11/include/";
+        
 
 ext_modules = [
     Extension(
@@ -24,7 +30,8 @@ ext_modules = [
         ['chenhancc/chenhancc.cpp'],
         include_dirs=[
             # Path to pybind11 headers
-            "./chenhancc/includes/pybind11/include/",
+            #"./chenhancc/includes/pybind11/include/",
+            get_pybind_include(),
             "./chenhancc/includes/pybinder/",
             "./chenhancc/"
         ],
@@ -99,7 +106,7 @@ setup(
     keywords='geodesic mesh mesh3d opengl pygl triangle triangular meshes blender',
     python_requires='>=3',
     ext_modules=ext_modules,
-    install_requires=['pybind11>=1.8'],
+    install_requires=['pybind11==2.0.0'],
     cmdclass={'build_ext': BuildExt},
     zip_safe=False,
 )

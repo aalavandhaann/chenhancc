@@ -1,1 +1,2 @@
 v<0.0.1>, <01/10/2017> -- Initial release.
+v<0.0.2>, <02/10/2017> -- Remove pybind11 source from the source tree to help build pip package successfully on windows. Just a try not sure if this will work
