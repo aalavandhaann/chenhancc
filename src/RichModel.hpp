@@ -36,7 +36,7 @@ struct CEdge
 
 class CRichModel : public CBaseModel
 {
-protected:
+public:
 	void CreateEdgesFromVertsAndFaces();
 	void CollectAndArrangeNeighs();
 	void ComputeAnglesAroundVerts();
