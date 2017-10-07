@@ -36,13 +36,8 @@ struct CEdge
 
 class CRichModel : public CBaseModel
 {
-public:
-	void CreateEdgesFromVertsAndFaces();
-	void CollectAndArrangeNeighs();
-	void ComputeAnglesAroundVerts();
-	void ComputePlanarCoordsOfIncidentVertForEdges();
-	void ComputeNumOfHoles();
-	void ComputeNumOfComponents();
+//protected:
+
 public:
 	CRichModel();
 	void Preprocess();	
@@ -54,6 +49,15 @@ public:
 		m_FlagsForCheckingConvexVerts.clear(); 
 		m_Edges.clear();
 	}
+
+
+	void CreateEdgesFromVertsAndFaces();
+	void CollectAndArrangeNeighs();
+	void ComputeAnglesAroundVerts();
+	void ComputePlanarCoordsOfIncidentVertForEdges();
+	void ComputeNumOfHoles();
+	void ComputeNumOfComponents();
+
 	inline int GetSubindexToVert(int root, int neigh) const;
 	inline const CEdge& Edge(int edgeIndex) const;	
     inline const std::vector<std::pair<int, double> >& Neigh(int root) const;

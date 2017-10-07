@@ -16,7 +16,6 @@ chenhancc.egg-info/PKG-INFO
 chenhancc.egg-info/SOURCES.txt
 chenhancc.egg-info/dependency_links.txt
 chenhancc.egg-info/not-zip-safe
-chenhancc.egg-info/requires.txt
 chenhancc.egg-info/top_level.txt
 chenhancc/includes/pybind11/include/pybind11/attr.h
 chenhancc/includes/pybind11/include/pybind11/cast.h

@@ -776,9 +776,15 @@ void bind_std_stl_set(std::function< pybind11::module &(std::string const &names
 #include <RichModel.hpp> // CRichModel::AngleSum
 #include <RichModel.hpp> // CRichModel::CRichModel
 #include <RichModel.hpp> // CRichModel::ClearEdges
+#include <RichModel.hpp> // CRichModel::CollectAndArrangeNeighs
 #include <RichModel.hpp> // CRichModel::CombinePointAndNormalTo
 #include <RichModel.hpp> // CRichModel::CombineTwoNormalsTo
+#include <RichModel.hpp> // CRichModel::ComputeAnglesAroundVerts
+#include <RichModel.hpp> // CRichModel::ComputeNumOfComponents
+#include <RichModel.hpp> // CRichModel::ComputeNumOfHoles
+#include <RichModel.hpp> // CRichModel::ComputePlanarCoordsOfIncidentVertForEdges
 #include <RichModel.hpp> // CRichModel::ComputeShiftPoint
+#include <RichModel.hpp> // CRichModel::CreateEdgesFromVertsAndFaces
 #include <RichModel.hpp> // CRichModel::DistanceToIncidentAngle
 #include <RichModel.hpp> // CRichModel::Edge
 #include <RichModel.hpp> // CRichModel::GetEdgeIndexFromTwoVertices
@@ -1018,6 +1024,12 @@ void bind_Point3D(std::function< pybind11::module &(std::string const &namespace
 		cl.def_readwrite("m_Edges", &CRichModel::m_Edges);
 		cl.def("Preprocess", (void (CRichModel::*)()) &CRichModel::Preprocess, "C++: CRichModel::Preprocess() --> void");
 		cl.def("ClearEdges", (void (CRichModel::*)()) &CRichModel::ClearEdges, "C++: CRichModel::ClearEdges() --> void");
+		cl.def("CreateEdgesFromVertsAndFaces", (void (CRichModel::*)()) &CRichModel::CreateEdgesFromVertsAndFaces, "C++: CRichModel::CreateEdgesFromVertsAndFaces() --> void");
+		cl.def("CollectAndArrangeNeighs", (void (CRichModel::*)()) &CRichModel::CollectAndArrangeNeighs, "C++: CRichModel::CollectAndArrangeNeighs() --> void");
+		cl.def("ComputeAnglesAroundVerts", (void (CRichModel::*)()) &CRichModel::ComputeAnglesAroundVerts, "C++: CRichModel::ComputeAnglesAroundVerts() --> void");
+		cl.def("ComputePlanarCoordsOfIncidentVertForEdges", (void (CRichModel::*)()) &CRichModel::ComputePlanarCoordsOfIncidentVertForEdges, "C++: CRichModel::ComputePlanarCoordsOfIncidentVertForEdges() --> void");
+		cl.def("ComputeNumOfHoles", (void (CRichModel::*)()) &CRichModel::ComputeNumOfHoles, "C++: CRichModel::ComputeNumOfHoles() --> void");
+		cl.def("ComputeNumOfComponents", (void (CRichModel::*)()) &CRichModel::ComputeNumOfComponents, "C++: CRichModel::ComputeNumOfComponents() --> void");
 		cl.def("GetSubindexToVert", (int (CRichModel::*)(int, int) const) &CRichModel::GetSubindexToVert, "C++: CRichModel::GetSubindexToVert(int, int) const --> int", pybind11::arg("root"), pybind11::arg("neigh"));
 		cl.def("Edge", (const struct CEdge & (CRichModel::*)(int) const) &CRichModel::Edge, "C++: CRichModel::Edge(int) const --> const struct CEdge &", pybind11::return_value_policy::automatic, pybind11::arg("edgeIndex"));
 		cl.def("Neigh", (const class std::vector<struct std::pair<int, double>, class std::allocator<struct std::pair<int, double> > > & (CRichModel::*)(int) const) &CRichModel::Neigh, "C++: CRichModel::Neigh(int) const --> const class std::vector<struct std::pair<int, double>, class std::allocator<struct std::pair<int, double> > > &", pybind11::return_value_policy::automatic, pybind11::arg("root"));
@@ -1125,9 +1137,15 @@ void bind_Point3D(std::function< pybind11::module &(std::string const &namespace
 #include <RichModel.hpp> // CRichModel::AngleSum
 #include <RichModel.hpp> // CRichModel::CRichModel
 #include <RichModel.hpp> // CRichModel::ClearEdges
+#include <RichModel.hpp> // CRichModel::CollectAndArrangeNeighs
 #include <RichModel.hpp> // CRichModel::CombinePointAndNormalTo
 #include <RichModel.hpp> // CRichModel::CombineTwoNormalsTo
+#include <RichModel.hpp> // CRichModel::ComputeAnglesAroundVerts
+#include <RichModel.hpp> // CRichModel::ComputeNumOfComponents
+#include <RichModel.hpp> // CRichModel::ComputeNumOfHoles
+#include <RichModel.hpp> // CRichModel::ComputePlanarCoordsOfIncidentVertForEdges
 #include <RichModel.hpp> // CRichModel::ComputeShiftPoint
+#include <RichModel.hpp> // CRichModel::CreateEdgesFromVertsAndFaces
 #include <RichModel.hpp> // CRichModel::DistanceToIncidentAngle
 #include <RichModel.hpp> // CRichModel::Edge
 #include <RichModel.hpp> // CRichModel::GetEdgeIndexFromTwoVertices
@@ -1711,7 +1729,7 @@ struct PyCallBack_CICHWithFurtherPriorityQueue : public CICHWithFurtherPriorityQ
 
 void bind_RichModel(std::function< pybind11::module &(std::string const &namespace_) > &M)
 {
-	{ // EdgePoint file:RichModel.hpp line:320
+	{ // EdgePoint file:RichModel.hpp line:324
 		pybind11::class_<EdgePoint, std::shared_ptr<EdgePoint>> cl(M(""), "EdgePoint", "");
 		pybind11::handle cl_type = cl;
 

@@ -47,6 +47,7 @@ def compile_tasks():
                                             ];
         p = subprocess.Popen(" ".join(generate_command), shell = True);
         return_code = p.wait();
+        print('FINISHED GENERATING BINDER CPP FILE');
         
     if(args.b):
         if(os.path.isfile(PREFIX_PATH+ROOT_MODULE+".cpp")):
@@ -63,7 +64,9 @@ def compile_tasks():
             else:
                 print('ERROR GENERATING SHARED OBJECT FOR PYTHON. CHECK OUTPUT OF COMMAND ', build_library_command);            
             
+            print('FINISHED BUILDING CHENHANCC');
             add_to_user_library = ["rm", "~/.local/lib/python3.5/site-packages/"+ROOT_MODULE+".so", "&", "cp",PREFIX_PATH+ROOT_MODULE+".so", "~/.local/lib/python3.5/site-packages/"+ROOT_MODULE+".so"];
+            
         else:
             print('GENERATED FILE NOT FOUND. CHECK FOR ANY ERRORS IN BINDING');
             
@@ -72,7 +75,7 @@ def compile_tasks():
         import sys
         sys.path.insert(0, PREFIX_PATH);
         test_library();
-
+        print('FINISHED TESTING THE CHENHANCC LIBRARY');
 
 
 if __name__ == "__main__":
