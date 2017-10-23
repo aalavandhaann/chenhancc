@@ -1,4 +1,4 @@
-from configurations import BINDER_EXECUTABLE, ROOT_MODULE, PREFIX_PATH, ALL_INCLUDES, PROJECT_BASE, PROJECT_SOURCE_FILES, PROJECT_SOURCE_FILES, PROJECT_CONFIG_BINDER, BINDER_REPO_PATH, PYBIND11_INCLUDES, PYTHON_INCLUDES, CLANG_EXECUTABLE;
+from configurations import BINDER_EXECUTABLE, BINDER_EXECUTABLE_MING, ROOT_MODULE, PREFIX_PATH, ALL_INCLUDES, PROJECT_BASE, PROJECT_SOURCE_FILES, PROJECT_SOURCE_FILES, PROJECT_CONFIG_BINDER, BINDER_REPO_PATH, PYBIND11_INCLUDES, PYTHON_INCLUDES, CLANG_EXECUTABLE;
 import os;
 import subprocess, argparse;
 from direct.directscripts.gendocs import generate
@@ -30,6 +30,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-g", action='store_true', help="Generate pybind binding cpp files");
 parser.add_argument("-b", action='store_true', help="Generate Python library or not");
 parser.add_argument("-t", action='store_true', help="Test the generated module");
+parser.add_argument("-ming", action='store_true', help="Mingw system or not");
 
 
 def compile_tasks():
@@ -37,7 +38,11 @@ def compile_tasks():
     
     if(args.g):
         print('GENERATE BINDING CPP FILE');
-        generate_command = [BINDER_EXECUTABLE, "--bind", '""',
+        generator = BINDER_EXECUTABLE;
+        if(args.ming):
+            generator = BINDER_EXECUTABLE_MING;
+
+        generate_command = [generator, "--bind", '""',
                                             "--root-module",ROOT_MODULE, 
                                             "--prefix", PREFIX_PATH, 
                                             "--single-file", "--annotate-includes",
@@ -45,6 +50,7 @@ def compile_tasks():
                                             ALL_INCLUDES, "--", "-x", "c++", "-std=c++11",
                                             "-I"+PROJECT_SOURCE_FILES, "-I"+BINDER_REPO_PATH
                                             ];
+        print('COMMAND ISSUED L::: ', " ".join(generate_command));
         p = subprocess.Popen(" ".join(generate_command), shell = True);
         return_code = p.wait();
         print('FINISHED GENERATING BINDER CPP FILE');

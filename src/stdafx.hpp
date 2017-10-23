@@ -29,4 +29,3 @@ const double RateOfNormalShift = 5e-3;
 const double ToleranceOfConvexAngle = 5e-2;
 
 
-

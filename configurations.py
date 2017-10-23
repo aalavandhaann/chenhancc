@@ -3,6 +3,8 @@ from distutils.sysconfig import get_python_inc;
 
 #Path where the exe or the bin file of binder can be found
 BINDER_EXECUTABLE="binder"
+BINDER_EXECUTABLE_MING="binder-mingw"
+
 
 #CLANG COMPILER LOCATION
 #CLANG_EXECUTABLE="clang++"
@@ -10,6 +12,7 @@ CLANG_EXECUTABLE="g++"
 #CLANG_EXECUTABLE="g++"
 #Name of the project or the namespace that will be used in python to import
 ROOT_MODULE="chenhancc"
+
 #Path where the build files are stored
 PREFIX_PATH="/home/ashok/eclipse-workspace/chenhancc/autobinding_build/"
 #The single include file containing the include directive for all the source files used in the project
@@ -27,6 +30,6 @@ BINDER_REPO_PATH="/home/ashok/libraries/PyBinder/binder-master/"
 PYBIND11_INCLUDES="/home/ashok/libraries/PyBinder/binder-master/build/pybind11/include"
 #Path to Python includes 
 PYTHON_INCLUDES=get_python_inc();
-print(PYTHON_INCLUDES);
+print("PYTHON INCLUDES ::: " , PYTHON_INCLUDES);
 PYTHON_VERSION_INFO=".".join(platform.python_version().split(".")[:2]);
 #PYTHON_LOCAL_SITE_PACKAGES=

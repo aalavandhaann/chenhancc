@@ -1,9 +1,23 @@
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 import sys
+import argparse;
+
+#parser = argparse.ArgumentParser()
+# parser.add_argument("--compiler", help="Specify compiler");
+#args = parser.parse_args();
+
 
 __version__ = '0.0.5'
 __pybind_version__ = '2.0.0';
+
+
+__source_pybind__ = 'chenhancc/chenhancc-GCC.cpp';
+if('mingw' in sys.argv):
+    __source_pybind__ = 'chenhancc/chenhancc-MINGW.cpp';
+    
+print('ARGUMENTS LIST :::: ', sys.argv);
+
 
 class get_pybind_include(object):
     """Helper class to determine the pybind11 include path
@@ -16,10 +30,13 @@ class get_pybind_include(object):
         self.user = user
 
     def __str__(self):
+        #ALways return the included pybind11 headers. The user-defined pybind11 headers always create problems
+        #Due to the version conflict between Binder and latest Pybind11
         try:
             import pybind11;
             print('PYBIND11 INCLUDES ::: ', pybind11.get_include(self.user));
-            return pybind11.get_include(self.user);
+            return "./chenhancc/includes/pybind11/include/";
+#             return pybind11.get_include(self.user);
         except ImportError:
             return "./chenhancc/includes/pybind11/include/";
         
@@ -27,7 +44,7 @@ class get_pybind_include(object):
 ext_modules = [
     Extension(
         'chenhancc',
-        ['chenhancc/chenhancc.cpp'],
+        [__source_pybind__],
         include_dirs=[
             # Path to pybind11 headers
             #"./chenhancc/includes/pybind11/include/",
@@ -82,7 +99,7 @@ class BuildExt(build_ext):
 
     def build_extensions(self):
         ct = self.compiler.compiler_type
-        opts = self.c_opts.get(ct, [])
+        opts = self.c_opts.get(ct, []);        
         if ct == 'unix':
             opts.append('-DVERSION_INFO="%s"' % self.distribution.get_version())
             opts.append(cpp_flag(self.compiler))
