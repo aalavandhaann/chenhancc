@@ -8,6 +8,8 @@ include_dir = os.path.join(data_dir, "autowrap")
 ext = Extension("py_chenhan",
                 sources = ['py_chenhan.cpp'],
                 language="c++",
+                extra_compile_args=["-std=c++11"],
+                extra_link_args=["-std=c++11"],
                 include_dirs = [include_dir, data_dir],
                )
 
