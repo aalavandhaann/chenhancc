@@ -1,3 +1,5 @@
+# IMPORTANT THIS IS PROBABLY A DEAD END. USE [THIS](https://github.com/aalavandhaann/chenhan_cython) to get this geodesics working. Soon this repository will be deleted to avoid duplication
+
 chenhancc
 ==============
 
