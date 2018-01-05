@@ -22,7 +22,7 @@ cdef extern from "BaseModel.hpp":
     
     cdef cppclass CBaseModel:
         CBaseModel();
-        void LoadModel(libcpp_vector[CPoint3D], libcpp_vector[CFace] )
+        void LoadModel(libcpp_vector[CPoint3D] vertices, libcpp_vector[CFace] faces)
         int GetNumOfVerts();
         int GetNumOfFaces();
         bool isAValidModel();
@@ -44,6 +44,7 @@ cdef extern from "RichModel.hpp":
         double proportion
         bool isVertex
         EdgePoint()
+        EdgePoint(EdgePoint other)
         EdgePoint(int)
         EdgePoint(int, double)
         EdgePoint(CRichModel, int, int, double)
@@ -51,8 +52,9 @@ cdef extern from "RichModel.hpp":
     
     cdef cppclass CRichModel(CBaseModel):
         # wrap-inherits:
-        # CBaseModel
-        # CRichModel(CRichModel)
+        #     CBaseModel
+        #
+        
         CRichModel();
         void Preprocess();
         int GetNumOfEdges();
@@ -84,17 +86,14 @@ cdef extern from "ExactMethodForDGP.hpp":
         
     cdef cppclass CExactMethodForDGP:
         # wrap-ignore    
-        # ABSTRACT class
+        #     ABSTRACT class
+        #
         libcpp_vector[InfoAtVertex] m_InfoAtVertices;
         CExactMethodForDGP(CRichModel, libcpp_set[int])  except +  # wrap-ignore
         int GetRootSourceOfVert(int)
         libcpp_vector[EdgePoint] FindSourceVertex(int, libcpp_vector[EdgePoint])
         void PickShortestPaths(int)
-        void Execute()
-        void InitContainers()
-        void BuildSequenceTree()
-        void ClearContainers()
-        void FillExperimentalResults()
+        void Execute()        
         double GetRunTime()
         double GetMemoryCost()
         int GetWindowNum()
@@ -107,21 +106,24 @@ cdef extern from "ExactMethodForDGP.hpp":
 cdef extern from "PreviousCH.hpp":
     cdef cppclass CPreviousCH(CExactMethodForDGP):
         # wrap-inherits:
-        # CExactMethodForDGP
+        #     CExactMethodForDGP
+        #
         CPreviousCH(CRichModel,  libcpp_set[int])  except +
 
 
 cdef extern from "ImprovedCHWithEdgeValve.hpp":
-    cdef cppclass CImprovedCHWithEdgeValve(CExactMethodForDGP):
+    cdef cppclass CImprovedCHWithEdgeValve(CPreviousCH):
         # wrap-inherits:
-        # CPreviousCH
+        #     CPreviousCH
+        #
         CImprovedCHWithEdgeValve(CRichModel,  libcpp_set[int])  except +
 
 
 cdef extern from "ICHWithFurtherPriorityQueue.hpp":
-    cdef cppclass CICHWithFurtherPriorityQueue(CExactMethodForDGP):
+    cdef cppclass CICHWithFurtherPriorityQueue(CImprovedCHWithEdgeValve):
         # wrap-inherits:
-        # CImprovedCHWithEdgeValve
+        #     CImprovedCHWithEdgeValve
+        #
         CICHWithFurtherPriorityQueue(CRichModel,  libcpp_set[int])  except +
     
 ###AUTOWRAP
